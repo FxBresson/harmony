@@ -1,3 +1,114 @@
+@font-face {
+    font-family: 'Questrial Regular';
+    src: url("../fonts/Questrial-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
-    background: #CCC;
+    box-sizing: border-box;
+    font: 16px sans-serif;
+    font-family: 'Questrial Regular', sans-serif;
+    color: #000;
+    margin: 2% auto;
+}
+
+input {
+    display: block;
+    margin-bottom: 3%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+input[type='text'], input[type='password'] {
+    padding: 5px 15px;
+    width: 50%;
+}
+
+input[type='submit'] {
+    padding: 7px 20px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    border: none;
+    font-family: 'Questrial Regular', sans-serif;
+    font-size: 15px;
+}
+
+input::-webkit-input-placeholder {
+    text-transform: uppercase;
+    font-family: 'Questrial Regular', sans-serif;
+}
+
+input::-moz-placeholder {
+    text-transform: uppercase;
+    font-family: 'Questrial Regular', sans-serif;
+}
+
+input:-ms-input-placeholder {
+    text-transform: uppercase;
+    font-family: 'Questrial Regular', sans-serif;
+}
+
+input:-moz-placeholder {
+    text-transform: uppercase;
+    font-family: 'Questrial Regular', sans-serif;
+}
+
+img {
+    vertical-align: center;
+}
+
+a,
+a:focus,
+a:active,
+a:hover {
+    text-decoration: none;
+    color: #000;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+h1 {
+    font-size: 36px;
+    font-weight: bolder;
+}
+
+h2 {
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+h3 {
+    font-size: 26px;
+    font-weight: bolder;
+}
+
+h4 {
+    font-size: 23px;
+    font-weight: bold;
+}
+
+h5 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+h6 {
+    font-size: 18px;
+    font-weight: normal;
+}
+
+p {
+    line-height: 1em;
+    font-size: 14px;
+    font-weight: lighter;
+}
+
+body.home {
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
 }

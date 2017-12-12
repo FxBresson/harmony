@@ -5,15 +5,27 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
-
+    <link rel="stylesheet" href="assets/css/main.css">
 </head>
 
-<body>
+<body class="{% block bodyClass %}{% endblock %}">
 
-    <header>Chat</header>
+    {% if action is defined %}
 
-    {% block content %}{% endblock %}
-<script type="text/javascript">
+        {% block content %}{% endblock %}
+
+    {% else %}
+
+        {% block channel %}{% endblock %}
+        {% block private %}{% endblock %}
+        {% block chat %}{% endblock %}
+        {% block user %}{% endblock %}
+
+        <script src="https://unpkg.com/vue"></script>
+        {% block vuejs %}{% endblock %}
+
+    {% endif %}
+<!-- <script type="text/javascript">
 	// Need to get the current url origin
 	var body 		= document.getElementsByTagName('body')[0]
 	var urlSocket 	= window.location.origin+":3000/socket.io/socket.io.js"
@@ -27,8 +39,7 @@
     console.log(body)
     body.appendChild(script)
     body.appendChild(script2)
-</script>
-<?php  ?>
+</script> -->
 <script type="text/javascript" src="http://harmony:3000/socket.io/socket.io.js"></script>
 <script src="./assets/js/app.js"></script>
 </body>

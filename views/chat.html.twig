@@ -1,0 +1,45 @@
+{% extends 'main.php' %}
+
+{% block bodyClass %}chat{% endblock %}
+
+{% block channel %}{% endblock %}
+{% block private %}{% endblock %}
+{% block chat %}{% endblock %}
+{% block user %}{% endblock %}
+
+{% block vuesjs %}
+    <script>
+        var listMessages = new Vue({
+            // My div elsement
+            el: '#listMessages',
+            data: {
+                // The messages
+                messages: [
+                    { id_message: 1, id_channel: 1, timestamp: "2017-12-12 18:43:34", id_user: 1, content: "toto" }
+                ]
+            }
+        })
+
+        /*var listChannels = new Vue({
+            // My div elsement
+            el: '#listChannels',
+            data: {
+                // The messages
+                channels: [
+                    { id_channel: , id_type: , position: , name: , description: , user_id:  }
+                ]
+            }
+        })
+
+        var listUsersInChannels = new Vue({
+            // My div elsement
+            el: '#listUsersInChannels',
+            data: {
+                // The messages
+                users: [
+                    { id_relation: , id_user: , id_channel:  }
+                ]
+            }
+        })*/
+    </script>
+{% endblock %}
