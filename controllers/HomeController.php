@@ -8,11 +8,9 @@ $twig = new Twig_Environment($loader, array('cache' => false ));
 
 if ($action == 'home') {
     
-    $welcome_message = "Salut. T ki?";
-    
     $view_path = $action.'.html.twig';
     if (is_file('views/'.$view_path)) {
-        echo $twig->render($view_path, array('welcome_message' => $welcome_message));
+        echo $twig->render($view_path, array('action' => $action));
     } else {
         die('error no template : '.$view_path);
     }
