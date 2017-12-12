@@ -20,5 +20,40 @@
   "bugs": {
     "url": "https://github.com/FxBresson/harmony/issues"
   },
-  "homepage": "https://github.com/FxBresson/harmony#readme"
+  "homepage": "https://github.com/FxBresson/harmony#readme",
+  "devDependencies": {
+    "async": "^2.6.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babelify": "^8.0.0",
+    "browserify": "^14.5.0",
+    "colors": "^1.1.2",
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.9.0",
+    "gulp-compass": "^2.1.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-consolidate": "^0.2.0",
+    "gulp-cssbeautify": "^0.1.3",
+    "gulp-declare": "^0.3.0",
+    "gulp-iconfont": "^9.0.2",
+    "gulp-insert": "^0.5.0",
+    "gulp-jshint": "^2.0.4",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.6.1",
+    "gulp-sourcemaps": "^2.6.1",
+    "gulp-svgo": "^1.2.5",
+    "gulp-uglify": "^3.0.0",
+    "gulp-watch": "^4.3.11",
+    "gulp-wrap": "^0.13.0",
+    "gulp.spritesmith": "^6.7.0",
+    "jshint": "^2.9.5",
+    "lodash": "^4.17.4",
+    "map-stream": "0.0.7",
+    "path": "^0.12.7",
+    "utils-merge": "^1.0.1",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.9.0"
+  }
 }
