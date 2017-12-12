@@ -1,10 +1,10 @@
 <?php
 
 $routes = [
-    'home' => 'HomeCtrl',
-    'login_form' => 'AuthCtrl',
-    'login' => 'AuthCtrl',
-    'register_form' => 'AuthCtrl',
-    'register' => 'AuthCtrl',
-    'chat' => 'ChatCtrl'
+    'home' => 'HomeController',
+    'login_form' => 'AuthController',
+    'login' => 'AuthController',
+    'register_form' => 'AuthController',
+    'register' => 'AuthController',
+    'chat' => 'ChatController'
 ];
