@@ -49,26 +49,25 @@ class Aida {
                 $values[] = 'NULL';
             }
         }
-        
+
         if (!isset($this->{$this->pk})) {
             //Insert
             $query = "INSERT INTO ".$this->table_name." (".implode(", ", $this->fields).") VALUES (".implode(", ", $values).");";
             var_dump($query);
-            
+
             $insert = myQuery($query);
-            
+
             var_dump($insert);
-            
+            echo '<br>';
+
         } else {
             //update
             $arr = [];
             foreach($this->fields as $index => $field) {
                 $arr[] = $field.'='.$values[$index];
             }
-            
-            $query = "UPDATE ".$this->table_name." SET ".implode(", ", $arr).";";
-            var_dump($query);
-            
+            $query = "UPDATE ".$this->table_name." SET ".implode(", ", $arr)." WHERE ".$this->pk."=".$this->{$this->pk}.";";
+            $update = myQuery($query);
         }
     }
 
