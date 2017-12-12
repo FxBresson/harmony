@@ -27,15 +27,14 @@ var http = _http2.default.Server(app);
 var io = (0, _socket2.default)(http);
 
 io.on('connection', function (socket) {
-	io.emit('userConnect', Users[lastConnectedUserName]);
+	io.emit('test', 'coucou');
+
+	socket.on('test', function (msg) {
+		console.log(msg);
+	});
+
 	socket.on('disconnect', function () {
 		console.log('a user is disconnected');
-	});
-	socket.on('chat message', function (msg) {
-		var date = new Date();
-		var message = new MsgModel({ content: msg.msg, timetemp: date, sendBy: msg.userId, status: "send" });
-		message.save();
-		io.emit('chat message', msg);
 	});
 });
 

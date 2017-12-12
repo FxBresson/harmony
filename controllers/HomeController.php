@@ -4,12 +4,12 @@ include __DIR__ . '/../vendor/autoload.php';
 
 $loader = new Twig_Loader_Filesystem('views'); // Dossier contenant les templates
 $twig = new Twig_Environment($loader, array('cache' => false ));
-
+$url = 'http://harmony:3000/socket.io/socket.io.js';
 
 if ($action == 'home') {
-    
+
     $welcome_message = "Salut. T ki?";
-    
+
     $view_path = $action.'.html.twig';
     if (is_file('views/'.$view_path)) {
         echo $twig->render($view_path, array('welcome_message' => $welcome_message));

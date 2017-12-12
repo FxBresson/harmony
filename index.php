@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 require_once('utils/route.php');
 
@@ -8,7 +8,7 @@ if (empty($_GET['action'])) {
     $action = $_GET['action'];
 }
 
-
+$test = 'http://harmony:3000/socket.io/socket.io.js';
 
 $controlle_path = 'controllers/'.$routes[$action].'.php';
 
