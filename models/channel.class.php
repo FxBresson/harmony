@@ -23,7 +23,7 @@ class Channel extends Aida {
         $this->type = new Genre();
         $this->type->id_type = $this->id_type;
         $this->type->hydrate();
-        
+
         $this->owner = new User();
         $this->owner->id_user = $this->id_user;
         $this->owner->hydrate();

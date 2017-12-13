@@ -9,7 +9,6 @@
 </head>
 
 <body class="{% block bodyClass %}{% endblock %}">
-
     {% if action is defined %}
 
         {% block content %}{% endblock %}
@@ -25,22 +24,7 @@
         {% block vuejs %}{% endblock %}
 
     {% endif %}
-<!-- <script type="text/javascript">
-	// Need to get the current url origin
-	var body 		= document.getElementsByTagName('body')[0]
-	var urlSocket 	= window.location.origin+":3000/socket.io/socket.io.js"
-	var script 		= document.createElement('script')
-	var script2 	= document.createElement('script')
-    script.setAttribute('type', 'text/javascript')
-    script2.setAttribute('type', 'text/javascript')
-    script.setAttribute('src', urlSocket)
-    script2.setAttribute('src', './assets/js/app.js')
-    console.log(script)
-    console.log(body)
-    body.appendChild(script)
-    body.appendChild(script2)
-</script> -->
-<script type="text/javascript" src="http://harmony:3000/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="{{socketUrl}}"></script>
 <script src="./assets/js/app.js"></script>
 </body>
 

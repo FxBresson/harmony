@@ -20,6 +20,10 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
+var _request = require('request');
+
+var _request2 = _interopRequireDefault(_request);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = (0, _express2.default)();
@@ -29,8 +33,14 @@ var io = (0, _socket2.default)(http);
 io.on('connection', function (socket) {
 	io.emit('test', 'coucou');
 
-	socket.on('test', function (msg) {
-		console.log(msg);
+	socket.on('get_users', function (msg) {
+		(0, _request2.default)('http://harmony/API/api.php?rquest=users', { json: true }, function (err, res, body) {
+			if (err) {
+				return console.log(err);
+			}
+			console.log(res.body);
+			io.emit('users', res.body);
+		});
 	});
 
 	socket.on('disconnect', function () {

@@ -4,10 +4,13 @@ console.log('kjdkj')
 let socket = io(window.location.origin+':3000')
 
 document.addEventListener('click', () => {
-	console.log('click')
-	socket.emit('test', 'tessst')
+	console.log('get users')
+	socket.emit('get_users')
 })
 
+socket.on('users', (data)=> {
+	console.log(data)
+})
 
 
 	// $('form').submit(function(){

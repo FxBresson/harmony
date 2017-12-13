@@ -5,7 +5,7 @@ function myQuery($query)
     global $link;
 
     if (empty($link))
-        $link = mysqli_connect('localhost', 'root', 'root', 'cinema') or die (mysqli_connect_error());
+        $link = mysqli_connect('localhost', 'root', 'root', 'harmony') or die (mysqli_connect_error());
     $result = mysqli_query($link, $query) or die (mysqli_error($link));
     return $result;
 }
@@ -22,7 +22,7 @@ function myFetchAssoc($query)
 
 }
 
-function myFetchAllAssoc($query)     
+function myFetchAllAssoc($query)
 {
     global $link;
 
