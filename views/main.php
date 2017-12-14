@@ -9,23 +9,21 @@
 </head>
 
 <body class="{% block bodyClass %}{% endblock %}">
+    
     {% if action is defined %}
 
-        {% block content %}{% endblock %}
+        <header>
+            <img src="assets/images/harmony_logo.png" alt="harmony_logo">
+            <h1>Harmony</h1>
+        </header>
+    
+    {% endif %}    
 
-    {% else %}
+    {% block content %}{% endblock %}
 
-        {% block channel %}{% endblock %}
-        {% block private %}{% endblock %}
-        {% block chat %}{% endblock %}
-        {% block user %}{% endblock %}
+    <script type="text/javascript" src="{{socketUrl}}"></script>
+    <script src="./assets/js/app.js"></script>
 
-        <script src="https://unpkg.com/vue"></script>
-        {% block vuejs %}{% endblock %}
-
-    {% endif %}
-<script type="text/javascript" src="{{socketUrl}}"></script>
-<script src="./assets/js/app.js"></script>
 </body>
 
 </html>

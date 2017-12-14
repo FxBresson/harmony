@@ -2,14 +2,73 @@
 
 {% block bodyClass %}chat{% endblock %}
 
-{% block channel %}{% endblock %}
-{% block private %}{% endblock %}
-{% block chat %}{% endblock %}
-{% block user %}{% endblock %}
+{% block content %}
 
-{% block vuesjs %}
-    <script>
-        var listMessages = new Vue({
+    <section id="section-channels" class="section column-20 row-100">
+        <div id="section-general" class="row-50">
+            <h3>Channels</h3>
+            <div id="listChannels">
+                <ul>
+                    <li>Channel 1</li>
+                    <li>Channel 2</li>
+                    <li>Channel 3</li>
+                    <li>Channel 4</li>
+                </ul>
+            </div>
+        </div>
+        <div id="section-private" class="row-50">
+            <h3>Private</h3>
+            <div id="listPrivate">
+                <ul>
+                    <li>Channel private 1</li>
+                    <li>Channel private 2</li>
+                    <li>Channel private 3</li>
+                    <li>Channel private 4</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="section-chat" class="section column-60 row-100">
+        <div id="section-top" class="row-10">
+            
+        </div>
+        
+        <div id="section-conversation" class="row-80">
+            <div id="listMessages">
+                <ul>
+                    <li>Message 1</li>
+                    <li>Message 2</li>
+                    <li>Message 3</li>
+                    <li>Message 4</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="section-input" class="row-10">
+            <form action="#">
+                <input type="text" name="send-message" id="send-message">
+                <button type="submit" class="send">Send</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="section-users" class="section column-18 row-100">
+        <h3>Users</h3>
+        <div id="listUsers">
+            <ul>
+                <li>Users numéro 1</li>
+                <li>Users numéro 2</li>
+                <li>Users numéro 3</li>
+                <li>Users numéro 4</li>
+            </ul>
+        </div>
+    </section>
+    
+
+    <script type="text/javascript" src="https://unpkg.com/vue"></script>
+    <script type="text/javascript">
+        /*var listMessages = new Vue({
             // My div elsement
             el: '#listMessages',
             data: {
@@ -18,7 +77,7 @@
                     { id_message: 1, id_channel: 1, timestamp: "2017-12-12 18:43:34", id_user: 1, content: "toto" }
                 ]
             }
-        })
+        })*/
 
         /*var listChannels = new Vue({
             // My div elsement
@@ -26,12 +85,25 @@
             data: {
                 // The messages
                 channels: [
-                    { id_channel: , id_type: , position: , name: , description: , user_id:  }
+                    { id_channel: 1 , id_type: 1 , position: 5, name: "Channel name", description: "Channel description", user_id: 1 },
+                    { id_channel: 1 , id_type: 1 , position: 5, name: "Channel name", description: "Channel description", user_id: 1 }
                 ]
             }
-        })
+        })*/
 
-        var listUsersInChannels = new Vue({
+        /*var listPrivate = new Vue({
+            // My div elsement
+            el: '#listPrivate',
+            data: {
+                // The messages
+                channels: [
+                    { id_channel: 1 , id_type: 1 , position: 5, name: "Channel name", description: "Channel description", user_id: 1 },
+                    { id_channel: 1 , id_type: 1 , position: 5, name: "Channel name", description: "Channel description", user_id: 1 }
+                ]
+            }
+        })*/
+
+        /*var listUsersInChannels = new Vue({
             // My div elsement
             el: '#listUsersInChannels',
             data: {
