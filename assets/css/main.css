@@ -1,17 +1,28 @@
-body {
+body.chat {
     margin: 0;
 }
 
-#section-private {
-    border-top: 1px solid #000;
+.channel-active {
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
-#section-general, #section-top {
-    border-bottom: 1px solid #000;
+.channel-active a,
+.channel-active a:hover {
+    color: #fff;
 }
 
-ul li {
-    list-style-type: none;
+#add-private {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+#add-private img {
+    width: 22%;
+}
+
+#section-profile img, #section-profile p {
+    display: inline-block;
 }
 
 @font-face {
@@ -26,6 +37,7 @@ body {
     font: 16px sans-serif;
     font-family: 'Questrial Regular', sans-serif;
     color: #000;
+    overflow: hidden;
 }
 
 .column-1 {
@@ -831,16 +843,42 @@ body {
 .section {
     float: left;
     border: 1px solid #000;
+    position: relative;
 }
 
-input {
+.border-top {
+    border-top: 1px solid #000;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #000;
+}
+
+.border-right {
+    border-right: 1px solid #000;
+}
+
+.border-left {
+    border-left: 1px solid #000;
+}
+
+form.horizontal,
+form.horizontal input {
+    display: inline-block;
+}
+
+form.vertical,
+form.vertical input {
     display: block;
+}
+
+form.vertical input {
     margin-bottom: 3%;
     margin-left: auto;
     margin-right: auto;
 }
 
-input[type='text'], input[type='password'] {
+form.vertical input[type='text'], form.vertical input[type='password'] {
     padding: 5px 15px;
     width: 50%;
 }
@@ -875,7 +913,20 @@ input:-moz-placeholder {
 }
 
 img {
-    vertical-align: center;
+    vertical-align: middle;
+    margin: 4px;
+}
+
+img.img-mini {
+    width: 15%;
+}
+
+img.radius {
+    border-radius: 15px;
+}
+
+img.picto-mini {
+    width: 8%;
 }
 
 a,
@@ -886,8 +937,16 @@ a:hover {
     color: #000;
 }
 
+ul {
+    padding-right: 10px;
+}
+
 ul li {
     padding: 10px;
+}
+
+ul.type-none li {
+    list-style-type: none;
 }
 
 h1, h2, h3, h4, h5, h6 {

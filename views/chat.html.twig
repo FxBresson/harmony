@@ -1,36 +1,41 @@
 {% extends 'main.php' %}
 
+{% block title %}Let's chat!{% endblock %}
+
 {% block bodyClass %}chat{% endblock %}
 
 {% block content %}
 
-    <section id="section-channels" class="section column-20 row-100">
-        <div id="section-general" class="row-50">
+    <section id="section-left" class="section column-20 row-100">
+        <div id="section-general" class="row-50 border-bottom">
             <h3>Channels</h3>
             <div id="listChannels">
-                <ul>
-                    <li><a href="?action=chat&type=channel&id=1"> Channel 1</a></li>
+                <ul class="type-none">
+                    <li {% if type == 'channel' or (type == 'channel' and id == 1) %}class="channel-active"{% endif %}><a href="?action=chat&type=channel&id=1"> Channel 1</a></li>
                     <li>Channel 2</li>
                     <li>Channel 3</li>
                     <li>Channel 4</li>
                 </ul>
             </div>
         </div>
-        <div id="section-private" class="row-50">
+        <div id="section-private" class="row-50 border-top">
             <h3>Private</h3>
             <div id="listPrivate">
-                <ul>
-                    <li><a href="?action=chat&type=private&id=2"> Channel private 1</a></li>
+                <ul class="type-none">
+                    <li {% if type == 'private' and id == 2 %}class="channel-active"{% endif %}><a href="?action=chat&type=private&id=2"> Channel private 1</a></li>
                     <li>Channel private 2</li>
                     <li>Channel private 3</li>
                     <li>Channel private 4</li>
                 </ul>
             </div>
+            <div id="add-private">
+                <img src="assets/images/plus.svg" alt="plus">
+            </div>
         </div>
     </section>
 
-    <section id="section-chat" class="section column-60 row-100">
-        <div id="section-top" class="row-10">
+    <section id="section-center" class="section column-60 row-100">
+        <div id="section-top" class="row-10 border-bottom">
             {% if type == 'channel' %}
                 <h2>Titre de la channel</h2>
             {% elseif type == 'private' %}
@@ -40,9 +45,9 @@
             {% endif %}
         </div>
         
-        <div id="section-conversation" class="row-80">
+        <div id="section-chat" class="row-80 border-top border-bottom">
             <div id="listMessages">
-                <ul>
+                <ul class="type-none">
                     <li>Message 1</li>
                     <li>Message 2</li>
                     <li>Message 3</li>
@@ -51,23 +56,40 @@
             </div>
         </div>
 
-        <div id="section-input" class="row-10">
-            <form action="#">
-                <input type="text" name="send-message" id="send-message">
-                <button type="submit" class="send">Send</button>
+        <div id="section-input" class="row-10 border-top">
+            <form action="#" class="horizontal">
+                <input type="text" name="send-message" id="send-message" class="column-50" placeholder="Enter your message">
+                <input type="submit" class="send" value="Send">
             </form>
         </div>
     </section>
 
-    <section id="section-users" class="section column-18 row-100">
-        <h3>Users</h3>
-        <div id="listUsers">
-            <ul>
-                <li><a href="?action=chat&type=direct&id=3"> Users numéro 1</a></li>
-                <li>Users numéro 2</li>
-                <li>Users numéro 3</li>
-                <li>Users numéro 4</li>
-            </ul>
+    <section id="section-right" class="section column-19 row-100">
+        <div id="section-profile" class="row-10 border-bottom">
+            <img src="assets/images/user-img.png" alt="user" class="img-mini radius">
+            <p>My profile</p>
+            <img src="assets/images/profile.svg" alt="profile" class="img-mini">
+        </div>
+
+        <div id="section-users" class="row-90 border-top">
+            <h3>My Friends</h3>
+            <div id="listUsersFriends">
+                <ul class="type-none">
+                    <li {% if type == 'direct' and id == 3 %}class="channel-active"{% endif %}><a href="?action=chat&type=direct&id=3"> <img src="assets/images/user-img.png" alt="user" class="img-mini radius"> Users numéro 1</a></li>
+                    <li>Users numéro 2</li>
+                    <li>Users numéro 3</li>
+                    <li>Users numéro 4</li>
+                </ul>
+            </div>
+            <h3>Others</h3>
+            <div id="listUsersOthers">
+                <ul class="type-none">
+                    <li> <img src="assets/images/user-img.png" alt="user" class="img-mini radius"> Users numéro 1 <a href="?action=chat&link=addFriend"> <img src="assets/images/plus.svg" alt="plus" class="picto-mini"></a></li>
+                    <li>Users numéro 2</li>
+                    <li>Users numéro 3</li>
+                    <li>Users numéro 4</li>
+                </ul>
+            </div>
         </div>
     </section>
     

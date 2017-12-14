@@ -1,3 +1,11 @@
+ul {
+    padding-right: 10px;
+}
+
 ul li {
     padding: 10px;
+}
+
+ul.type-none li {
+    list-style-type: none;
 }
