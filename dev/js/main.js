@@ -1,6 +1,5 @@
 //window.location.origin+':3000'
 
-console.log('kjdkj')
 let socket = io(window.location.origin+':3000')
 
 document.addEventListener('click', () => {
