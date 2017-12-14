@@ -9,7 +9,7 @@
             <h3>Channels</h3>
             <div id="listChannels">
                 <ul>
-                    <li>Channel 1</li>
+                    <li><a href="?action=chat&type=channel&id=1"> Channel 1</a></li>
                     <li>Channel 2</li>
                     <li>Channel 3</li>
                     <li>Channel 4</li>
@@ -20,7 +20,7 @@
             <h3>Private</h3>
             <div id="listPrivate">
                 <ul>
-                    <li>Channel private 1</li>
+                    <li><a href="?action=chat&type=private&id=2"> Channel private 1</a></li>
                     <li>Channel private 2</li>
                     <li>Channel private 3</li>
                     <li>Channel private 4</li>
@@ -31,7 +31,13 @@
 
     <section id="section-chat" class="section column-60 row-100">
         <div id="section-top" class="row-10">
-
+            {% if type == 'channel' %}
+                <h2>Titre de la channel</h2>
+            {% elseif type == 'private' %}
+                <h2>Private</h2>
+            {% elseif type == 'direct' %}
+                <h2>Direct message</h2>
+            {% endif %}
         </div>
 
         <div id="section-conversation" class="row-80">
@@ -57,10 +63,11 @@
         <h3>Users</h3>
         <div id="listUsers">
             <ul>
-                <li>Users numéro 1</li>
-                <li>Users numéro 2</li>
-                <li>Users numéro 3</li>
-                <li>Users numéro 4</li>
+                --{{users}}
+                <li v-for="user in users">
+                    coucou {{user}} coucoc
+                    <a href="?action=chat&type=direct&id=3">{{user.avatar}}</a>
+                </li>
             </ul>
         </div>
     </section>
