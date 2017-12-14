@@ -1,13 +1,14 @@
 <?php
 
-require_once('aida.class.php');
+require_once('./utils/aida.class.php');
 
-class User extends Aida {   
+class User extends Aida {
+
+    public static $pk = 'id_user';
+    public static $table_name = 'users';
+    public static $fields = ['username', 'avatar', 'email', 'password', 'sr', 'available', 'battletag'];
 
     public function __construct() {
-        $this->pk = 'id_user';
-        $this->fields = ['username', 'avatar', 'email', 'password', 'sr', 'available', 'battletag'];
-        $this->table_name = 'users';
     }
 
 }

@@ -1,13 +1,15 @@
 <?php
 
-require_once('aida.class.php');
+require_once('./utils/aida.class.php');
 
 class ChannelType extends Aida {
 
+    public static $pk = 'id_type';
+    public static $fields = ['name', 'user_limit', 'voice'];
+    public static $table_name = 'channel_types';
+
     public function __construct() {
-        $this->pk = 'id_type';
-        $this->fields = ['name', 'user_limit', 'voice'];
-        $this->table_name = 'channel_types';
+
     }
-    
+
 }

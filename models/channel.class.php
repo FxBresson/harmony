@@ -1,32 +1,35 @@
 <?php
 
-require_once('aida.class.php');
+require_once('./utils/aida.class.php');
 
-require_once('channel_type.class.php');
-require_once('user.class.php');
+require_once('./models/channel_type.class.php');
+require_once('./models/user.class.php');
 
 class Channel extends Aida {
+
+    public static $pk = 'id_channel';
+    public static $fields = ['id_type', 'position', 'name', 'description', 'id_user'];
+    public static $table_name = 'channels';
 
     protected $type;
     protected $owner;
 
+
     public function __construct() {
-        $this->pk = 'id_channel';
-        $this->fields = ['id_type', 'position', 'name', 'description', 'user_id'];
-        $this->table_name = 'channels';
+
     }
 
     public function hydrate() {
 
         parent::hydrate();
-
-        $this->type = new Genre();
+        
+        $this->type = new ChannelType();
         $this->type->id_type = $this->id_type;
         $this->type->hydrate();
 
         $this->owner = new User();
         $this->owner->id_user = $this->id_user;
-        $this->owner->hydrate();
+        $this->owner->hydrate();        
 
     }
 
