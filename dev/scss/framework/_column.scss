@@ -1,0 +1,23 @@
+$class-column: column !default;
+$unit-column: vw !default;
+
+@for $i from 1 through 100 {
+    .#{$class-column}-#{$i} {
+        width: unquote("#{$i}#{$unit-column}");
+        
+    }
+}
+
+$class-row: row !default;
+$unit-row: vh !default;
+
+@for $i from 1 through 100 {
+    .#{$class-row}-#{$i} {
+        height: unquote("#{$i}#{$unit-row}");
+    }
+}
+
+.section {
+    float: left;
+    border: 1px solid #000;
+}
