@@ -40,7 +40,7 @@ io.on('connection', (socket)=>{
 		  		io.emit('return_channels', {'error': err})
 		  		return console.log(err)
 		  	}
-			io.emit('return_chanels', res.body)
+			io.emit('return_channels', res.body)
 		})
 	})
 

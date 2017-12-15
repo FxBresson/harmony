@@ -10,6 +10,7 @@ let listChannels = (socket) => {
 				error = 'Aucun channel trouvé...'
 			}
 			let vueListChannels = new Vue({
+				delimiters: ['${', '}'],
 		        el: '#listChannels',
 		        data: {
 		        	channels: data,
