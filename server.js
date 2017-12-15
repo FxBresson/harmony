@@ -13,13 +13,44 @@ const io   = ioBase(http)
 
 
 io.on('connection', (socket)=>{
-	io.emit('test', 'coucou')
 
-	socket.on('get_users', (msg)=> {
+	socket.on('get_users', () => {
 		request('http://harmony/API/api.php?rquest=users', { json: true }, (err, res, body) => {
-		  	if (err) { return console.log(err) }
-		  	console.log(res.body)
-			io.emit('users', res.body)
+		  	if (err) {
+		  		io.emit('return_users', {'error': err})
+		  		return console.log(err)
+		  	}
+			io.emit('return_users', res.body)
+		})
+	})
+
+	socket.on('get_messages', () => {
+		request('http://harmony/API/api.php?rquest=messages', { json: true }, (err, res, body) => {
+		  	if (err) {
+		  		io.emit('return_messages', {'error': err})
+		  		return console.log(err)
+		  	}
+			io.emit('return_messages', res.body)
+		})
+	})
+
+	socket.on('get_channels', () => {
+		request('http://harmony/API/api.php?rquest=channels', { json: true }, (err, res, body) => {
+		  	if (err) {
+		  		io.emit('return_channels', {'error': err})
+		  		return console.log(err)
+		  	}
+			io.emit('return_chanels', res.body)
+		})
+	})
+
+	socket.on('get_privates', () => {
+		request('http://harmony/API/api.php?rquest=chanels', { json: true }, (err, res, body) => {
+		  	if (err) {
+		  		io.emit('return_privates', {'error': err})
+		  		return console.log(err)
+		  	}
+			io.emit('return_privates', res.body)
 		})
 	})
 

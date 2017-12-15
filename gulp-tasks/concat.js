@@ -9,7 +9,7 @@ function compile(callback) {
     let concatError = 0;
     gulp.src(config.globs.libsConcat)
         .pipe(concat('libs.build.js'))
-        .pipe(gulp.dest(config.paths.dist))
+        .pipe(gulp.dest(config.paths.distJs))
         .on('error', () => {
             concatError++;
         })

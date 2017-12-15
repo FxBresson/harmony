@@ -31,15 +31,44 @@ var http = _http2.default.Server(app);
 var io = (0, _socket2.default)(http);
 
 io.on('connection', function (socket) {
-	io.emit('test', 'coucou');
 
-	socket.on('get_users', function (msg) {
+	socket.on('get_users', function () {
 		(0, _request2.default)('http://harmony/API/api.php?rquest=users', { json: true }, function (err, res, body) {
 			if (err) {
+				io.emit('return_users', { 'error': err });
 				return console.log(err);
 			}
-			console.log(res.body);
-			io.emit('users', res.body);
+			io.emit('return_users', res.body);
+		});
+	});
+
+	socket.on('get_messages', function () {
+		(0, _request2.default)('http://harmony/API/api.php?rquest=messages', { json: true }, function (err, res, body) {
+			if (err) {
+				io.emit('return_messages', { 'error': err });
+				return console.log(err);
+			}
+			io.emit('return_messages', res.body);
+		});
+	});
+
+	socket.on('get_channels', function () {
+		(0, _request2.default)('http://harmony/API/api.php?rquest=channels', { json: true }, function (err, res, body) {
+			if (err) {
+				io.emit('return_channels', { 'error': err });
+				return console.log(err);
+			}
+			io.emit('return_chanels', res.body);
+		});
+	});
+
+	socket.on('get_privates', function () {
+		(0, _request2.default)('http://harmony/API/api.php?rquest=chanels', { json: true }, function (err, res, body) {
+			if (err) {
+				io.emit('return_privates', { 'error': err });
+				return console.log(err);
+			}
+			io.emit('return_privates', res.body);
 		});
 	});
 
