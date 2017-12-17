@@ -1,8 +1,9 @@
-import userList from './views/chat/listUsers.js'
+import userList 	from './views/chat/listUsers.js'
 import privatesList from './views/chat/listPrivates.js'
 import messagesList from './views/chat/listMessages.js'
 import channelsList from './views/chat/listChannels.js'
-import chatbox from './views/chat/chatbox.js'
+import chatbox 		from './views/chat/chatbox.js'
+import loader 		from './views/chat/loader.js'
 
 
 class App {
@@ -15,6 +16,7 @@ class App {
 		privatesList(socket)
 		channelsList(socket)
 		chatbox(socket)
+		loader(socket)
 	}
 }
 

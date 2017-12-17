@@ -14,6 +14,8 @@ const io   = ioBase(http)
 
 io.on('connection', (socket)=>{
 	let currentNamespace = socket.handshake.headers.origin
+	currentNamespace = (currentNamespace === 'http://localhost' ? currentNamespace+'/harmony' : currentNamespace )
+	console.log(currentNamespace)
 	socket.on('get_users', () => {
 		request(currentNamespace+'/api/user', { json: true }, (err, res, body) => {
 		  	if (err) {

@@ -32,6 +32,8 @@ var io = (0, _socket2.default)(http);
 
 io.on('connection', function (socket) {
 	var currentNamespace = socket.handshake.headers.origin;
+	currentNamespace = currentNamespace === 'http://localhost' ? currentNamespace + '/harmony' : currentNamespace;
+	console.log(currentNamespace);
 	socket.on('get_users', function () {
 		(0, _request2.default)(currentNamespace + '/api/user', { json: true }, function (err, res, body) {
 			if (err) {
