@@ -2,8 +2,7 @@ let listPrivates = (socket) => {
 	let $listPrivates = document.getElementById('listPrivates')
 	if($listPrivates) {
 		let error = null
-		socket.emit('get_privates')
-		socket.on('return_privates', (data)=> {
+		socket.on('return_channels', (data)=> {
 			if(data === null) {
 				data  = []
 				error = 'Aucun channel privé'
@@ -13,7 +12,13 @@ let listPrivates = (socket) => {
 		        el: '#listPrivates',
 		        data: {
 		        	privates: data,
-		        	error:error
+		        	error:error,
+		        	showModal: false
+		        },
+		        components: {
+		        	'modal': {
+		        	  	template: '#modal-template'
+		        	}
 		        }
 		    })
 		})
