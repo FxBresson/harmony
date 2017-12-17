@@ -4,7 +4,7 @@ let listChannels = (socket) => {
 		let error = null
 		socket.emit('get_channels')
 		socket.on('return_channels', (data)=> {
-
+			console.log(data)
 			if(data === null) {
 				data  = []
 				error = 'Aucun channel trouvé...'
@@ -14,7 +14,14 @@ let listChannels = (socket) => {
 		        el: '#listChannels',
 		        data: {
 		        	channels: data,
-		        	error: error
+		        	error: error,
+		        	selected: null
+		        },
+		        methods:{
+		        	selectChan: function(id) {
+		        		console.log(this)
+		        		this.selected = id
+		        	}
 		        }
 		    })
 		})
