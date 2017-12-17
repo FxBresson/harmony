@@ -2,7 +2,6 @@ let listMessages = (socket) => {
 	let $listMessages = document.getElementById('listMessages')
 	if($listMessages) {
 		let error = null
-		//socket.emit('get_messages')
 		let vueListMessages = new Vue({
 				delimiters: ['${', '}'],
 		        el: '#listMessages',
@@ -12,7 +11,6 @@ let listMessages = (socket) => {
 		        }
 		    })
 		socket.on('return_messages', (data)=> {
-			console.log('return_messages', data)
 			if(data === null) {
 				data  = []
 				error = 'Aucun message trouvé...'

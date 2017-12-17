@@ -5,7 +5,7 @@
 {% block bodyClass %}chat{% endblock %}
 
 {% block content %}
-
+    <input id="selectedChannel" type="hidden">
     <section id="section-left" class="section column-20 row-100">
 
         <!-- General channels list -->
@@ -13,7 +13,6 @@
             <h3>Channels</h3>
 
             <div id="listChannels">
-                <input id="selectedChannel" type="hidden" :value="selected">
                 <template v-if="channels.length > 0 && !error">
                     <ul class="type-none">
                         <li  v-bind:class="{ 'channel-active': channel.id_channel === selected }" v-for="channel in channels" @click.prevent="selectChan(channel.id_channel)">
@@ -56,13 +55,7 @@
 
         <!-- Channel title / Channel users -->
         <div id="section-top" class="row-10 border-bottom">
-            {% if type == 'channel' %}
-                <h2>Titre de la channel</h2>
-            {% elseif type == 'private' %}
-                <h2>Private</h2>
-            {% elseif type == 'direct' %}
-                <h2>Direct message</h2>
-            {% endif %}
+            <h2>Titre de la channel</h2>
         </div>
 
         <!-- Chat -->
@@ -85,9 +78,9 @@
 
         <!-- Text input message -->
         <div id="section-input" class="row-10 border-top">
-            <form action="#" class="horizontal">
-                <input type="text" name="send-message" id="send-message" class="column-50" placeholder="Enter your message">
-                <input type="submit" class="send" value="Send">
+            <form class="horizontal">
+                <input type="text" name="send-message" id="send-message" class="column-50" placeholder="Enter your message" v-on:keyup.enter="send" v-model="message">
+                <button class="send" @click.prevent="send()" >Send</button>
             </form>
         </div>
     </section>

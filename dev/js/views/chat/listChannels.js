@@ -2,6 +2,7 @@ let listChannels = (socket) => {
 	let $listChannels = document.getElementById('listChannels')
 	if($listChannels) {
 		let error = null
+		let $selected = document.getElementById('selectedChannel')
 		socket.emit('get_channels')
 		socket.on('return_channels', (data)=> {
 			if(data === null) {
@@ -19,6 +20,7 @@ let listChannels = (socket) => {
 		        methods:{
 		        	selectChan: function(id) {
 		        		this.selected = id
+		        		$selected.value = id
 		        		socket.emit('get_channel_messages', id)
 		        	}
 		        }

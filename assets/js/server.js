@@ -52,6 +52,16 @@ io.on('connection', function (socket) {
 		});
 	});
 
+	socket.on('send_message', function (message) {
+		_request2.default.post({ url: currentNamespace + '/api/message', form: message }, function (err, httpResponse, body) {
+			if (err) {
+				console.log(err);
+				return err;
+			}
+			io.emit('success_send_message');
+		});
+	});
+
 	socket.on('get_channels', function () {
 		(0, _request2.default)(currentNamespace + '/api/channel', { json: true }, function (err, res, body) {
 			if (err) {
@@ -64,7 +74,6 @@ io.on('connection', function (socket) {
 
 	socket.on('get_channel_messages', function (id) {
 		(0, _request2.default)(currentNamespace + '/api/channel/' + id + '/messages', { json: true }, function (err, res, body) {
-			console.log(body);
 			if (err) {
 				io.emit('return_messages', { 'error': err });
 				return console.log(err);

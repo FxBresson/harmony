@@ -34,6 +34,16 @@ io.on('connection', (socket)=>{
 		})
 	})
 
+	socket.on('send_message', (message) => {
+		request.post({url:currentNamespace+'/api/message', form:message }, (err,httpResponse,body) => {
+			if (err) {
+				console.log(err)
+				return err
+			}
+			io.emit('success_send_message')
+		})
+	})
+
 	socket.on('get_channels', () => {
 		request(currentNamespace+'/api/channel', { json: true }, (err, res, body) => {
 		  	if (err) {
@@ -46,7 +56,6 @@ io.on('connection', (socket)=>{
 
 	socket.on('get_channel_messages', (id) => {
 		request(currentNamespace+'/api/channel/'+id+'/messages', { json: true }, (err, res, body) => {
-		  	console.log(body)
 		  	if (err) {
 		  		io.emit('return_messages', {'error': err})
 		  		return console.log(err)
