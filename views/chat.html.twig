@@ -10,49 +10,29 @@
         <div id="section-general" class="row-50 border-bottom">
             <h3>Channels</h3>
             <div id="listChannels">
-<<<<<<< HEAD
-                <ul class="type-none">
-                    <li {% if type == 'channel' or (type == 'channel' and id == 1) %}class="channel-active"{% endif %}><a href="?action=chat&type=channel&id=1"> Channel 1</a></li>
-                    <li>Channel 2</li>
-                    <li>Channel 3</li>
-                    <li>Channel 4</li>
-                </ul>
-=======
                 <template v-if="channels.length > 0 && !error">
-                    <ul >
-                        <li v-for="channel in channels">
-                            ${ channel.name }
-                            <a href="?action=chat&type=direct&id=3">{{channel.name}}</a>
+                    <ul class="type-none">
+                        <li  {% if type == 'channel' or (type == 'channel' and id == 1) %}class="channel-active"{% endif %} v-for="channel in channels">
+                            <a href="?action=chat&type=direct&id=${ channel.id_channel }">${ channel.name }</a>
                         </li>
                     </ul>
                 </template>
                 <span class="loading" v-else-if="!error">Loading...</span>
                 <span class="error" v-else="error">${ error }</span>
->>>>>>> 8330ec526fefc6e4ff7ea204a4aaf1a6a62d3a2e
             </div>
         </div>
         <div id="section-private" class="row-50 border-top">
             <h3>Private</h3>
-<<<<<<< HEAD
-            <div id="listPrivate">
-                <ul class="type-none">
-                    <li {% if type == 'private' and id == 2 %}class="channel-active"{% endif %}><a href="?action=chat&type=private&id=2"> Channel private 1</a></li>
-                    <li>Channel private 2</li>
-                    <li>Channel private 3</li>
-                    <li>Channel private 4</li>
-                </ul>
-=======
             <div id="listPrivates">
                 <template v-if="privates.length > 0 && !error">
-                    <ul >
-                        <li v-for="private in privates">
-                            ${ private.content }
+                    <ul class="type-none">
+                        <li  {% if type == 'private' and id == 2 %}class="channel-active"{% endif %} v-for="private in privates">
+                                <a href="?action=chat&type=private&id=${ private.id_channel}">${ private.content }</a>
                         </li>
                     </ul>
                 </template>
                 <span class="loading" v-else-if="!error">Loading...</span>
                 <span class="error" v-else="error">${error}</span>
->>>>>>> 8330ec526fefc6e4ff7ea204a4aaf1a6a62d3a2e
             </div>
             <div id="add-private">
                 <img src="assets/images/plus.svg" alt="plus">
@@ -73,16 +53,8 @@
         
         <div id="section-chat" class="row-80 border-top border-bottom">
             <div id="listMessages">
-<<<<<<< HEAD
-                <ul class="type-none">
-                    <li>Message 1</li>
-                    <li>Message 2</li>
-                    <li>Message 3</li>
-                    <li>Message 4</li>
-                </ul>
-=======
                 <template v-if="messages.length > 0 && !error">
-                    <ul >
+                    <ul class="type-none">
                         <li v-for="message in messages">
                             ${ message.content }
                         </li>
@@ -90,7 +62,6 @@
                 </template>
                 <span class="loading" v-else-if="!error">Loading...</span>
                 <span class="error" v-else="error">${error}</span>
->>>>>>> 8330ec526fefc6e4ff7ea204a4aaf1a6a62d3a2e
             </div>
         </div>
 
@@ -102,48 +73,26 @@
         </div>
     </section>
 
-<<<<<<< HEAD
-    <section id="section-right" class="section column-19 row-100">
+    <section id="section-users" class="section column-19 row-100">
         <div id="section-profile" class="row-10 border-bottom">
             <img src="assets/images/user-img.png" alt="user" class="img-mini radius">
             <p>My profile</p>
             <img src="assets/images/profile.svg" alt="profile" class="img-mini">
         </div>
 
-        <div id="section-users" class="row-90 border-top">
-            <h3>My Friends</h3>
-            <div id="listUsersFriends">
-                <ul class="type-none">
-                    <li v-for="user in users" {% if type == 'direct' and id == 3 %}class="channel-active"{% endif %}>
-                        coucou {{user}} coucoc
-                        <a href="?action=chat&type=direct&id=3">  <img src="assets/images/user-img.png" alt="user" class="img-mini radius">{{user.avatar}}</a>
-                    </li>
-                </ul>
+        <div id="section-users" class="row-90 border-top"></div>
+            <h3>Users</h3>
+            <div id="listUsers">
+                <template v-if="users.length > 0 && !error">
+                    <ul class="type-none">
+                        <li {% if type == 'direct' and id == 3 %}class="channel-active"{% endif %} v-for="user in users">                   
+                            <a href="?action=chat&type=direct&id=3"><img src="${ user.avatar }" alt="user" class="img-mini radius">${ user.name }</a>
+                        </li>
+                    </ul>
+                </template>
+                <span class="loading" v-else-if="!error">Loading...</span>
+                <span class="error" v-else="error">${error}</span>
             </div>
-            <h3>Others</h3>
-            <div id="listUsersOthers">
-                <ul class="type-none">
-                    <li> <img src="assets/images/user-img.png" alt="user" class="img-mini radius"> Users numéro 1 <a href="?action=chat&link=addFriend"> <img src="assets/images/plus.svg" alt="plus" class="picto-mini"></a></li>
-                    <li>Users numéro 2</li>
-                    <li>Users numéro 3</li>
-                    <li>Users numéro 4</li>
-                </ul>
-            </div>
-=======
-    <section id="section-users" class="section column-18 row-100">
-        <h3>Users</h3>
-        <div id="listUsers">
-            <template v-if="users.length > 0 && !error">
-                <ul >
-                    <li v-for="user in users">
-                        ${ user.avatar }
-                        <a href="?action=chat&type=direct&id=3">{{user.avatar}}</a>
-                    </li>
-                </ul>
-            </template>
-            <span class="loading" v-else-if="!error">Loading...</span>
-            <span class="error" v-else="error">${error}</span>
->>>>>>> 8330ec526fefc6e4ff7ea204a4aaf1a6a62d3a2e
         </div>
     </section>
 {% endblock %}

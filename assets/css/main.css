@@ -6,16 +6,16 @@ body.chat {
     background-color: rgba(0, 0, 0, 0.2);
 }
 
-<<<<<<< HEAD
+<<<<<<<HEAD
 .channel-active a,
 .channel-active a:hover {
     color: #fff;
-=======
+    =======
 <<<<<<<HEAD
 =======
 #section-general, #section-top {
     border-bottom: 1px solid #000;
->>>>>>> 275ff86a1e4722c4c83335e478a5d9b837188ac4
+    >>>>>>> 275ff86a1e4722c4c83335e478a5d9b837188ac4
 }
 
 #add-private {
@@ -945,7 +945,7 @@ a:hover {
     color: #000;
 }
 
-<<<<<<< HEAD
+<<<<<<<HEAD
 ul {
     padding-right: 10px;
 }
@@ -958,7 +958,7 @@ ul li {
     padding: 10px;
 }
 
-<<<<<<< HEAD
+<<<<<<<HEAD
 ul.type-none li {
     list-style-type: none;
 }
