@@ -75,10 +75,10 @@
             <h3>My Friends</h3>
             <div id="listUsersFriends">
                 <ul class="type-none">
-                    <li {% if type == 'direct' and id == 3 %}class="channel-active"{% endif %}><a href="?action=chat&type=direct&id=3"> <img src="assets/images/user-img.png" alt="user" class="img-mini radius"> Users numéro 1</a></li>
-                    <li>Users numéro 2</li>
-                    <li>Users numéro 3</li>
-                    <li>Users numéro 4</li>
+                    <li v-for="user in users" {% if type == 'direct' and id == 3 %}class="channel-active"{% endif %}>
+                        coucou {{user}} coucoc
+                        <a href="?action=chat&type=direct&id=3">  <img src="assets/images/user-img.png" alt="user" class="img-mini radius">{{user.avatar}}</a>
+                    </li>
                 </ul>
             </div>
             <h3>Others</h3>
@@ -92,7 +92,7 @@
             </div>
         </div>
     </section>
-    
+
 
     <script type="text/javascript" src="https://unpkg.com/vue"></script>
     <script type="text/javascript">

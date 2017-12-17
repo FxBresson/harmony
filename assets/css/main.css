@@ -6,9 +6,16 @@ body.chat {
     background-color: rgba(0, 0, 0, 0.2);
 }
 
+<<<<<<< HEAD
 .channel-active a,
 .channel-active a:hover {
     color: #fff;
+=======
+<<<<<<<HEAD
+=======
+#section-general, #section-top {
+    border-bottom: 1px solid #000;
+>>>>>>> 275ff86a1e4722c4c83335e478a5d9b837188ac4
 }
 
 #add-private {
@@ -25,11 +32,12 @@ body.chat {
     display: inline-block;
 }
 
+>>>>>>>548afcb54ebc9774c7709df09cbb39f4baaae9d1
 @font-face {
     font-family: 'Questrial Regular';
-  src: url("../fonts/Questrial-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
+    src: url("../fonts/Questrial-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
 }
 
 body {
@@ -937,24 +945,36 @@ a:hover {
     color: #000;
 }
 
+<<<<<<< HEAD
 ul {
     padding-right: 10px;
 }
 
+=======
+<<<<<<<HEAD
+=======
+>>>>>>> 275ff86a1e4722c4c83335e478a5d9b837188ac4
 ul li {
     padding: 10px;
 }
 
+<<<<<<< HEAD
 ul.type-none li {
     list-style-type: none;
 }
 
+=======
+>>>>>>>548afcb54ebc9774c7709df09cbb39f4baaae9d1
+>>>>>>> 275ff86a1e4722c4c83335e478a5d9b837188ac4
 h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
     text-transform: uppercase;
     margin: 0;
+    <<<<<<< HEAD
+=======
     text-align: center;
     padding: 10px;
+    >>>>>>> 548afcb54ebc9774c7709df09cbb39f4baaae9d1
 }
 
 h1 {
