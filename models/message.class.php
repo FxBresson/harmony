@@ -1,9 +1,9 @@
 <?php
 
-require_once('./utils/aida.class.php');
+require_once('utils/aida.class.php');
 
-require_once('./models/channel.class.php');
-require_once('./models/user.class.php');
+require_once('models/channel.class.php');
+require_once('models/user.class.php');
 
 class Message extends Aida {
 

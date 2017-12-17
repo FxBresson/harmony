@@ -1,6 +1,6 @@
 <?php
 
-include('dbtools.php');
+require_once('dbtools.php');
 
 class Aida {
 
@@ -54,7 +54,6 @@ class Aida {
         if (!isset($this->{get_class($this)::$pk})) {
             //Insert
             $query = "INSERT INTO ".get_class($this)::$table_name." (".implode(", ", get_class($this)::$fields).") VALUES (".implode(", ", $values).");";
-            var_dump($query);
 
             return $insert = myQuery($query);
 
@@ -71,12 +70,12 @@ class Aida {
     }
 
     public function delete() {
-        return $query = "DELETE FROM ".get_class($this)::$table_name." WHERE ".get_class($this)::$pk."=".$this->{get_class($this)::$pk}.";";
+        return myQuery("DELETE FROM ".get_class($this)::$table_name." WHERE ".get_class($this)::$pk."=".$this->{get_class($this)::$pk}.";");
     }
 
     public static function selectAll() {
-        $query = "SELECT * FROM ".get_class($this)::$table_name;
-        return $results = myFetchAssoc($query);
+        $query = "SELECT * FROM ".static::$table_name;
+        return myFetchAllAssoc($query);
     }
 
 }

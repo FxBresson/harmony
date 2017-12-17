@@ -1,11 +1,23 @@
+let listMessages = (socket) => {
+	let $listMessages = document.getElementById('listMessages')
+	if($listMessages) {
+		let error = null
+		socket.emit('get_messages')
+		socket.on('return_messages', (data)=> {
 
-let listMessages = new Vue({
-    // My div elsement
-    el: '#listMessages',
-    data: {
-        // The messages
-        messages: [
-        { id_message: 1, id_channel: 1, timestamp: "2017-12-12 18:43:34", id_user: 1, content: "toto" }
-        ]
-    }
-})
+			if(data === null) {
+				data  = []
+				error = 'Aucun message trouvé...'
+			}
+			let vueListMessages = new Vue({
+				delimiters: ['${', '}'],
+		        el: '#listMessages',
+		        data: {
+		        	messages: data,
+		        	error: error
+		        }
+		    })
+		})
+	}
+}
+export default listMessages

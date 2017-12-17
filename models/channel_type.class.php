@@ -1,6 +1,6 @@
 <?php
 
-require_once('./utils/aida.class.php');
+require_once('utils/aida.class.php');
 
 class ChannelType extends Aida {
 

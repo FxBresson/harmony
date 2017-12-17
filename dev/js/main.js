@@ -1,13 +1,18 @@
-import userlist from './views/chat/listUsers.js'
+import userList from './views/chat/listUsers.js'
+import privatesList from './views/chat/listPrivates.js'
+import messagesList from './views/chat/listMessages.js'
+import channelsList from './views/chat/listChannels.js'
 
 
 class App {
 
 	init() {
-		console.log('init')
+		Vue.config.delimiters = ['${', '}']
 		let socket = io(window.location.origin+':3000')
-		userlist(socket)
-		console.log(userlist)
+		userList(socket)
+		messagesList(socket)
+		privatesList(socket)
+		channelsList(socket)
 	}
 }
 
