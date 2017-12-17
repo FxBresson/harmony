@@ -1,3 +1,4 @@
+// Common
 body.chat {
     margin: 0;
 }
@@ -11,16 +12,42 @@ body.chat {
     color: #fff;
 }
 
-#add-private {
+
+// Private
+#section-private #add-private {
     position: absolute;
     bottom: 10px;
     left: 10px;
 }
 
-#add-private img {
+#section-private #add-private img {
     width: 22%;
 } 
 
+
+// Chat
+#section-chat li {
+    background-color: rgba(0,0,0,0.1);
+}
+#section-chat #chat-avatar img {
+    float: left;
+    width: 5%;
+    margin: 0;
+    margin-right: 2%;
+}
+
+#section-chat #chat-user {
+    font-size: 16px;
+}
+#section-chat #chat-time {
+    font-size: 12px;
+}
+#section-chat #chat-message {
+    font-size: 16px;
+}
+
+
+// Profile
 #section-profile img, #section-profile p {
     display: inline-block;
 }

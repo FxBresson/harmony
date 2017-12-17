@@ -11,14 +11,37 @@ body.chat {
     color: #fff;
 }
 
-#add-private {
+#section-private #add-private {
     position: absolute;
     bottom: 10px;
     left: 10px;
 }
 
-#add-private img {
+#section-private #add-private img {
     width: 22%;
+}
+
+#section-chat li {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+#section-chat #chat-avatar img {
+    float: left;
+    width: 5%;
+    margin: 0;
+    margin-right: 2%;
+}
+
+#section-chat #chat-user {
+    font-size: 16px;
+}
+
+#section-chat #chat-time {
+    font-size: 12px;
+}
+
+#section-chat #chat-message {
+    font-size: 16px;
 }
 
 #section-profile img, #section-profile p {
@@ -928,12 +951,12 @@ img.img-mini {
     width: 15%;
 }
 
-img.radius {
-    border-radius: 15px;
-}
-
 img.picto-mini {
     width: 8%;
+}
+
+img.radius {
+    border-radius: 50%;
 }
 
 a,
@@ -998,4 +1021,5 @@ p {
     line-height: 1em;
     font-size: 14px;
     font-weight: lighter;
+    margin: 0;
 }

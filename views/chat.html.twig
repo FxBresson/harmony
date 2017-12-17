@@ -34,7 +34,7 @@
                 <template v-if="privates.length > 0 && !error">
                     <ul class="type-none">
                         <li  {% if type == 'private' and id == 2 %}class="channel-active"{% endif %} v-for="private in privates">
-                                <a href="?action=chat&type=private&id=${ private.id_channel}">${ private.content }</a>
+                            <a href="?action=chat&type=private&id=${ private.id_channel}">${ private.content }</a>
                         </li>
                     </ul>
                 </template>
@@ -70,7 +70,9 @@
                 <template v-if="messages.length > 0 && !error">
                     <ul class="type-none">
                         <li v-for="message in messages">
-                            ${ message.content }
+                            <p id="chat-avatar"><img src="assets/images/user-img.png" alt="profile" class="img-mini radius"></p>
+                            <p><span id="chat-user">${ message.id_user }</span> <span id="chat-time">${ message.timestamp }</span></p>           
+                            <p id="chat-message">${ message.content }</p>
                         </li>
                     </ul>
                 </template>
