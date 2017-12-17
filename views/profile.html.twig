@@ -1,0 +1,26 @@
+{% extends 'main.php' %}
+
+{% block title %}My profile{% endblock %}
+
+{% block bodyClass %}profile page-template{% endblock %}
+
+{% block content %}
+
+    <section id="section-form">
+
+        <form action="post" enctype="multipart/form-data" class="vertical">
+
+            <input type="text" name="email" placeholder="Enter your email" required>
+            <input type="text" name="login" placeholder="Enter your login" required>
+            <input type="password" name="password" placeholder="Enter your password" required>
+            <input type="password" name="password" placeholder="Confirm your password" required>
+            <input type="text" name="battletag" placeholder="Enter your battletag" required>
+            <input type="text" name="sr" placeholder="Enter your SR" required>
+            <input type="file" name="avatar" id="avatar">
+            <input type="submit" value="Register">
+
+        </form>
+
+    </section>
+
+{% endblock %}

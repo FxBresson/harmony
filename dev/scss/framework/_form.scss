@@ -1,15 +1,25 @@
-input {
+form.horizontal,
+form.horizontal input {
+    display: inline-block;
+}
+
+form.vertical,
+form.vertical input {
     display: block;
+}
+
+form.vertical input {
     margin-bottom: 3%;
     margin-left: auto;
     margin-right: auto;
-    
 
     &[type='text'], &[type='password'] {
         padding: 5px 15px;
         width: 50%;
     }
+}
 
+input { 
     &[type='submit'] {
         padding: 7px 20px;
         border-radius: 5px;

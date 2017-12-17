@@ -10,4 +10,12 @@ body {
 	font: 16px sans-serif;
 	font-family: 'Questrial Regular', sans-serif;
 	color: #000;
+	overflow: hidden;
+}
+
+body.page-template {
+	max-width : 600px ;
+	width : 100% ;
+	text-align : center ;
+	margin : 2% auto;
 }

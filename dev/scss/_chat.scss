@@ -1,15 +1,26 @@
-body {
+body.chat {
     margin: 0;
 }
 
-#section-private {
-    border-top: 1px solid #000;
+.channel-active {
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
-#section-general , #section-top {
-    border-bottom: 1px solid #000;
+.channel-active a,
+.channel-active a:hover {
+    color: #fff;
 }
 
-ul li {
-    list-style-type: none;
+#add-private {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+#add-private img {
+    width: 22%;
+} 
+
+#section-profile img, #section-profile p {
+    display: inline-block;
 }
