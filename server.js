@@ -13,8 +13,9 @@ const io   = ioBase(http)
 
 
 io.on('connection', (socket)=>{
+	let currentNamespace = socket.handshake.headers.origin
 	socket.on('get_users', () => {
-		request('http://harmony/api/user', { json: true }, (err, res, body) => {
+		request(currentNamespace+'/api/user', { json: true }, (err, res, body) => {
 		  	if (err) {
 		  		io.emit('return_users', {'error': err})
 		  		return console.log(err)
@@ -24,7 +25,7 @@ io.on('connection', (socket)=>{
 	})
 
 	socket.on('get_messages', () => {
-		request('http://harmony/api/message', { json: true }, (err, res, body) => {
+		request(currentNamespace+'/api/message', { json: true }, (err, res, body) => {
 		  	if (err) {
 		  		io.emit('return_messages', {'error': err})
 		  		return console.log(err)
@@ -34,7 +35,7 @@ io.on('connection', (socket)=>{
 	})
 
 	socket.on('get_channels', () => {
-		request('http://harmony/api/channel', { json: true }, (err, res, body) => {
+		request(currentNamespace+'/api/channel', { json: true }, (err, res, body) => {
 		  	if (err) {
 		  		io.emit('return_channels', {'error': err})
 		  		return console.log(err)
@@ -44,7 +45,7 @@ io.on('connection', (socket)=>{
 	})
 
 	socket.on('get_privates', () => {
-		request('http://harmony/api/private', { json: true }, (err, res, body) => {
+		request(currentNamespace+'/api/private', { json: true }, (err, res, body) => {
 		  	if (err) {
 		  		io.emit('return_privates', {'error': err})
 		  		return console.log(err)
