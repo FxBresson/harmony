@@ -16,7 +16,7 @@
                 <template v-if="channels.length > 0 && !error">
                     <ul class="type-none">
                         <li  {% if type == 'channel' or (type == 'channel' and id == 1) %}class="channel-active"{% endif %} v-for="channel in channels">
-                            <a href="?action=chat&type=channel&id=${ channel.id_channel }">${ channel.name }</a>
+                            <a href="?action=chat&type=channel&id=">${ channel.name }</a>
                         </li>
                     </ul>
                 </template>
@@ -34,7 +34,7 @@
                 <template v-if="privates.length > 0 && !error">
                     <ul class="type-none">
                         <li  {% if type == 'private' and id == 2 %}class="channel-active"{% endif %} v-for="private in privates">
-                            <a href="?action=chat&type=private&id=${ private.id_channel}">${ private.content }</a>
+                            <a href="?action=chat&type=private&id=">${ private.content }</a>
                         </li>
                     </ul>
                 </template>
@@ -102,7 +102,7 @@
         </div>
 
         <!-- Users -->
-        <div id="section-users" class="row-90 border-top"></div>
+        <div id="section-users" class="row-90 border-top">
 
             <!-- Friends -->
             <h3>Users</h3>
@@ -110,7 +110,7 @@
                 <template v-if="users.length > 0 && !error">
                     <ul class="type-none">
                         <li {% if type == 'direct' and id == 3 %}class="channel-active"{% endif %} v-for="user in users">                   
-                            <a href="?action=chat&type=direct&id=3"><img src="${ user.avatar }" alt="user" class="img-mini radius">${ user.name }</a>
+                            <a href="?action=chat&type=direct&id=3"><img src="assets/images/img-user.png" alt="user" class="img-mini radius">${ user.name }</a>
                         </li>
                     </ul>
                 </template>
