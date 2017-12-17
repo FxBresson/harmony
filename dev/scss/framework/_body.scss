@@ -12,3 +12,10 @@ body {
 	color: #000;
 	overflow: hidden;
 }
+
+body.page-template {
+	max-width : 600px ;
+	width : 100% ;
+	text-align : center ;
+	margin : 2% auto;
+}

@@ -6,7 +6,7 @@ $loader = new Twig_Loader_Filesystem('views'); // Dossier contenant les template
 $twig = new Twig_Environment($loader, array('cache' => false ));
 $url = 'http://harmony:3000/socket.io/socket.io.js';
 
-if ($action == 'register_form' || $action == 'register' || $action == 'forgot_password_form' || $action == 'forgot_password') {
+if ($action == 'profile') {
     $view_path = $action.'.html.twig';
     $socketUrl = 'http://'.$_SERVER['SERVER_NAME'].':3000/socket.io/socket.io.js';
 

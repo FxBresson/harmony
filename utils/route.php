@@ -2,9 +2,10 @@
 
 $routes = [
     'home' => 'HomeController',
-    'login_form' => 'AuthController',
-    'login' => 'AuthController',
     'register_form' => 'AuthController',
     'register' => 'AuthController',
+    'forgot_password_form' => 'AuthController',
+    'forgot_password' => 'AuthController',
+    'profile' => 'ProfileController',
     'chat' => 'ChatController'
 ];
