@@ -5,7 +5,8 @@
   "main": "/dist/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run build && node assets/js/server.js",
+    "oldStart": "npm run build && node assets/js/server.js",
+    "start": "nodemon --exec npm run oldStart",
     "build": "babel server.js --out-dir assets/js",
     "devServer": "babel-node dev/js/server.js"
   },
