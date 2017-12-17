@@ -65,11 +65,12 @@ class Request {
     public function __construct(){
         $this->method = $_SERVER['REQUEST_METHOD'];
 
+
         if (isset($_GET['classname'])) {
             $this->classname = ucfirst($_GET['classname']);
 
             $this->returnedData = $this->processRequest();
-            
+
             $this->sendResponse();
         }
 
@@ -82,24 +83,36 @@ class Request {
                     return $this->classname::selectAll();
                 } else {
                     $object = new $this->classname;
-                    $object->{get_class($object)::$pk} = $_GET['id'];
-                    $object->hydrate();
-                    return $object;
+                    $object->{$this->classname::$pk} = $_GET['id'];
+                    if (!isset($_GET['method'])) {
+                        $object->hydrate();
+                        return $object;
+                    } else {
+                        return $object->{$_GET['method']}();
+                    }
                 }
 
                 break;
-            case 'PUT':
             case 'POST':
-
-                $object = new $class();
-                if (isset($_POST['id'])) {
-                    $film->id_film = $_POST['id'];
+                $object = new $this->classname();
+                if (isset($_GET['id'])) {
+                    $object->{$this->classname::$pk} = $_GET['id'];
+                    $object->hydrate();
                 }
+                foreach($_POST as $attribute => $value) {
+                    if (in_array($attribute, $this->classname::$fields)) {
+                        $object->{$attribute} = $value;
+                    }
+                }
+                return $object->save();
 
-                $film->hydrate();
                 break;
             case 'DELETE':
-
+                if (isset($_GET['id'])) {
+                    $object = new $this->classname;
+                    $object->{$this->classname::$pk} = $_GET['id'];
+                    return $object->delete();
+                }
 
                 break;
         }
@@ -116,6 +129,8 @@ class Request {
     public static function toJson($data){
         if(is_array($data) || is_object($data)){
             return json_encode($data);
+        } else {
+            return $data;
         }
     }
 
