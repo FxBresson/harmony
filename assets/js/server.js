@@ -62,6 +62,17 @@ io.on('connection', function (socket) {
 		});
 	});
 
+	socket.on('get_channel_messages', function (id) {
+		(0, _request2.default)(currentNamespace + '/api/channel/' + id + '/messages', { json: true }, function (err, res, body) {
+			console.log(body);
+			if (err) {
+				io.emit('return_messages', { 'error': err });
+				return console.log(err);
+			}
+			io.emit('return_messages', res.body);
+		});
+	});
+
 	socket.on('get_privates', function () {
 		(0, _request2.default)(currentNamespace + '/api/private', { json: true }, function (err, res, body) {
 			if (err) {

@@ -44,6 +44,17 @@ io.on('connection', (socket)=>{
 		})
 	})
 
+	socket.on('get_channel_messages', (id) => {
+		request(currentNamespace+'/api/channel/'+id+'/messages', { json: true }, (err, res, body) => {
+		  	console.log(body)
+		  	if (err) {
+		  		io.emit('return_messages', {'error': err})
+		  		return console.log(err)
+		  	}
+			io.emit('return_messages', res.body)
+		})
+	})
+
 	socket.on('get_privates', () => {
 		request(currentNamespace+'/api/private', { json: true }, (err, res, body) => {
 		  	if (err) {
