@@ -54,7 +54,7 @@ class Aida {
         if (!isset($this->{get_class($this)::$pk})) {
             //Insert
             $query = "INSERT INTO ".get_class($this)::$table_name." (".implode(", ", get_class($this)::$fields).") VALUES (".implode(", ", $values).");";
-
+            
             return $insert = myQuery($query);
 
         } else {

@@ -31,8 +31,9 @@ var http = _http2.default.Server(app);
 var io = (0, _socket2.default)(http);
 
 io.on('connection', function (socket) {
+	var currentNamespace = socket.handshake.headers.origin;
 	socket.on('get_users', function () {
-		(0, _request2.default)('http://harmony/api/user', { json: true }, function (err, res, body) {
+		(0, _request2.default)(currentNamespace + '/api/user', { json: true }, function (err, res, body) {
 			if (err) {
 				io.emit('return_users', { 'error': err });
 				return console.log(err);
@@ -42,7 +43,7 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('get_messages', function () {
-		(0, _request2.default)('http://harmony/api/message', { json: true }, function (err, res, body) {
+		(0, _request2.default)(currentNamespace + '/api/message', { json: true }, function (err, res, body) {
 			if (err) {
 				io.emit('return_messages', { 'error': err });
 				return console.log(err);
@@ -52,7 +53,7 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('get_channels', function () {
-		(0, _request2.default)('http://harmony/api/channel', { json: true }, function (err, res, body) {
+		(0, _request2.default)(currentNamespace + '/api/channel', { json: true }, function (err, res, body) {
 			if (err) {
 				io.emit('return_channels', { 'error': err });
 				return console.log(err);
@@ -61,8 +62,19 @@ io.on('connection', function (socket) {
 		});
 	});
 
+	socket.on('get_channel_messages', function (id) {
+		(0, _request2.default)(currentNamespace + '/api/channel/' + id + '/messages', { json: true }, function (err, res, body) {
+			console.log(body);
+			if (err) {
+				io.emit('return_messages', { 'error': err });
+				return console.log(err);
+			}
+			io.emit('return_messages', res.body);
+		});
+	});
+
 	socket.on('get_privates', function () {
-		(0, _request2.default)('http://harmony/api/private', { json: true }, function (err, res, body) {
+		(0, _request2.default)(currentNamespace + '/api/private', { json: true }, function (err, res, body) {
 			if (err) {
 				io.emit('return_privates', { 'error': err });
 				return console.log(err);

@@ -1,0 +1,13 @@
+<div id="listChannels">
+    <input id="selectedChannel" type="hidden" :value="selected">
+    <template v-if="channels.length > 0 && !error">
+        <ul class="type-none">
+            <li  v-bind:class="{ 'channel-active': channel.id_channel === selected }" v-for="channel in channels" @click.prevent="selectChan(channel.id_channel)">
+                ${ channel.name }
+            </li>
+        </ul>
+    </template>
+
+    <span class="loading" v-else-if="!error">Loading...</span>
+    <span class="error" v-else="error">${ error }</span>
+</div>

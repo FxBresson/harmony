@@ -16,8 +16,29 @@ class User extends Aida {
     public function __construct() {
     }
 
-    protected function getChannels() {
-        return myFetchAssoc("SELECT * FROM ".User::$user_channel_table." WHERE ".User::$pk."=".$this->{User::$pk}.";");
+    public function __set($attr_name, $attr_value) {
+        if (in_array($attr_name, get_class($this)::$fields) || $attr_name === get_class($this)::$pk) {
+            if ($attr_name === 'password') {
+                $this->$attr_name = password_hash($attr_value, PASSWORD_DEFAULT);
+            } else {
+                $this->$attr_name = $attr_value;
+            }
+        } else {
+            die('illegal field : '.$attr_name);
+        }
+    }
+
+    public function channels() {
+        $channels = Channel::$table_name;
+        $prefix = function($field) {
+            return Channel::$table_name.".".$field;
+        };
+        $map = array_map($prefix, Channel::$fields);
+        array_unshift($map, $prefix(Channel::$pk));
+        $channels_fields = implode(', ', $map);
+        $users_in_channels = User::$user_channel_table;
+        $query =  "SELECT ".$channels_fields." FROM ".$channels." LEFT JOIN ".$users_in_channels." USING(".Channel::$pk.") WHERE ".$channels.".id_type = 1 OR ".$channels.".id_type = 2 AND ".$users_in_channels.".".User::$pk." = ".$this->{User::$pk}.";";
+        return myFetchAllAssoc($query);
     }
 
     protected function leaveChannel($id_channel) {

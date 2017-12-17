@@ -32,5 +32,10 @@ class Channel extends Aida {
         $this->owner->hydrate();        
 
     }
+    
+    public function messages() {
+        $query = "SELECT * FROM ".Message::$table_name." WHERE ".Channel::$pk."=".$this->{Channel::$pk}.";";
+        return myFetchAllAssoc($query);
+    }
 
 }

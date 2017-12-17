@@ -4,6 +4,11 @@ RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !.*\.(css|jpe?g|gif|png|js|ico|html|ejs|woff|ttf)$
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^api/([a-z-]*)/([0-9]*)/([a-z-]*) api/?classname=$1&id=$2&method=$3 [L]
+
+RewriteCond %{REQUEST_FILENAME} !.*\.(css|jpe?g|gif|png|js|ico|html|ejs|woff|ttf)$
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^api/([a-z-]*)/([0-9]*) api/?classname=$1&id=$2 [L]
 
 RewriteCond %{REQUEST_FILENAME} !.*\.(css|jpe?g|gif|png|js|ico|html|ejs|woff|ttf)$
