@@ -9,6 +9,8 @@ import loader 		from './views/chat/loader.js'
 class App {
 
 	init() {
+
+		window.current_user = 1
 		Vue.config.delimiters = ['${', '}']
 		let socket = io(window.location.origin+':3000')
 		userList(socket)

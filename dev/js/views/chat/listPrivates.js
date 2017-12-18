@@ -2,31 +2,32 @@ let listPrivates = (socket) => {
 	let $listPrivates = document.getElementById('listPrivates')
 	if($listPrivates) {
 		let error = null
-		socket.on('return_channels', (data)=> {
+		socket.emit('get_privates', window.current_user)
+		socket.on('return_privates', (data)=> {
+			console.log(data)
 			if(data === null) {
 				data  = []
 				error = 'Aucun channel privé'
 			}
 			Vue.component('modal', {
-			  template: '#modal-template',
-			  //The child has a prop named 'value'. v-model will automatically bind to this prop
-			  props: ['show'],
+			  template: '#modal-create',
+			  props: ['show', 'title'],
 			  data: function() {
 			    return {
-			      internalValue: ''
+			      internalShow: '',
+			      internalTitle:'',
+			      internalDesc:''
 			    }
 			  },
 			  watch: {
-			    'internalValue': function() {
-			      // When the internal value changes, we $emit an event. Because this event is
-			      // named 'input', v-model will automatically update the parent value
-			      if (!this.internalValue) {this.$emit('close', this.internalValue);}
-
+			    'internalShow': function() {
+			      	if (!this.internalShow) {this.$emit('close', this.internalShow)}
 			    }
 			  },
 			  created: function() {
-			    // We initially sync the internalValue with the value passed in by the parent
-			    this.internalValue = this.show;
+			    this.internalShow  = this.show
+			    this.internalTitle = this.title
+			    this.internalDesc  = this.description
 			  }
 			})
 
@@ -36,15 +37,38 @@ let listPrivates = (socket) => {
 		        el: '#listPrivates',
 		        data: {
 		        	privates: data,
-		        	error:error,
-		        	showModal: false
+		        	error: error,
+		        	showModal: false,
+		        	title: '',
+		        	description:''
 		        },
 		        methods: {
 	        		closeModal: function() {
-	        			vueListPrivates.showModal = false
+	        			this.showModal = false
+	        			this.$children[0].internalShow = false
+
+	        		},
+	        		createNewChan: function() {
+	        			this.title = this.$children[0].internalTitle
+	        			this.description = this.$children[0].internalDesc
+	        			this.closeModal()
+	        			let privateChan = {
+	        				id_type: 2,
+	        				position: null,
+	        				name: this.title,
+	        				description: this.description,
+	        				id_user: 1
+	        			}
+	        			socket.emit('create_channel', privateChan)
+
 	        		}
 	        	}
 		    })
+		})
+
+
+		socket.on('success_create_channel', ()=> {
+			socket.emit('return_privates', window.current_user)
 		})
 	}
 }

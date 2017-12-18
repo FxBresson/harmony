@@ -33,7 +33,6 @@ var io = (0, _socket2.default)(http);
 io.on('connection', function (socket) {
 	var currentNamespace = socket.handshake.headers.origin;
 	currentNamespace = currentNamespace === 'http://localhost' ? currentNamespace + '/harmony' : currentNamespace;
-	console.log(currentNamespace);
 	socket.on('get_users', function () {
 		(0, _request2.default)(currentNamespace + '/api/user', { json: true }, function (err, res, body) {
 			if (err) {
@@ -84,13 +83,24 @@ io.on('connection', function (socket) {
 		});
 	});
 
-	socket.on('get_privates', function () {
-		(0, _request2.default)(currentNamespace + '/api/private', { json: true }, function (err, res, body) {
+	socket.on('get_privates', function (idUser) {
+		(0, _request2.default)(currentNamespace + '/api/user/' + idUser + '/chanprivate', { json: true }, function (err, res, body) {
 			if (err) {
 				io.emit('return_privates', { 'error': err });
 				return console.log(err);
 			}
 			io.emit('return_privates', res.body);
+		});
+	});
+
+	socket.on('create_channel', function (chan) {
+		_request2.default.post({ url: currentNamespace + '/api/channel', form: chan }, function (err, httpResponse, body) {
+			if (err) {
+				console.log(err);
+				return err;
+			}
+			console.log(httpResponse);
+			io.emit('success_create_channel');
 		});
 	});
 

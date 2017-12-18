@@ -15,7 +15,6 @@ const io   = ioBase(http)
 io.on('connection', (socket)=>{
 	let currentNamespace = socket.handshake.headers.origin
 	currentNamespace = (currentNamespace === 'http://localhost' ? currentNamespace+'/harmony' : currentNamespace )
-	console.log(currentNamespace)
 	socket.on('get_users', () => {
 		request(currentNamespace+'/api/user', { json: true }, (err, res, body) => {
 		  	if (err) {
@@ -66,13 +65,24 @@ io.on('connection', (socket)=>{
 		})
 	})
 
-	socket.on('get_privates', () => {
-		request(currentNamespace+'/api/private', { json: true }, (err, res, body) => {
+	socket.on('get_privates', (idUser) => {
+		request(currentNamespace+'/api/user/' + idUser + '/chanprivate', { json: true }, (err, res, body) => {
 		  	if (err) {
 		  		io.emit('return_privates', {'error': err})
 		  		return console.log(err)
 		  	}
 			io.emit('return_privates', res.body)
+		})
+	})
+
+	socket.on('create_channel', (chan) => {
+		request.post({url:currentNamespace+'/api/channel', form:chan }, (err,httpResponse,body) => {
+			if (err) {
+				console.log(err)
+				return err
+			}
+			console.log(httpResponse)
+			io.emit('success_create_channel')
 		})
 	})
 
