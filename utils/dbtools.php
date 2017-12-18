@@ -36,4 +36,10 @@ function myFetchAllAssoc($query)
         $tab_res[] = $array;
     return $tab_res;
 }
+
+function getLastId() 
+{
+    global $link;
+    return mysqli_insert_id($link);
+}
 ?>

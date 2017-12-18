@@ -64,8 +64,7 @@ class Request {
 
     public function __construct(){
         $this->method = $_SERVER['REQUEST_METHOD'];
-
-
+        
         if (isset($_GET['classname'])) {
             $this->classname = ucfirst($_GET['classname']);
 
