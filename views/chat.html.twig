@@ -15,7 +15,7 @@
             <div id="listChannels">
                 <template v-if="channels.length > 0 && !error">
                     <ul class="type-none">
-                        <li  v-bind:class="{ 'channel-active': channel.id_channel === selected }" v-for="channel in channels" @click.prevent="selectChan(channel.id_channel)">
+                        <li  v-bind:class="{ 'channel-active': channel.id_channel === selected }" v-for="channel in channels" @click.prevent="selectChan(channel.id_channel)" v-if="channel.id_type == 1">
                             ${ channel.name }
                         </li>
                     </ul>
@@ -33,26 +33,31 @@
             <div id="listPrivates">
                 <template v-if="privates.length > 0 && !error">
                     <ul class="type-none">
-                        <li  {% if type == 'private' and id == 2 %}class="channel-active"{% endif %} v-for="private in privates">
-                            <a href="#">${ private.content }</a>
+                        <li  {% if type == 'private' and id == 2 %}class="channel-active"{% endif %} v-for="private in privates" v-if="private.id_type == 2">
+                            <a href="#">${ private.name }</a>
                         </li>
                     </ul>
                 </template>
 
                 <span class="loading" v-else-if="!error">Loading...</span>
                 <span class="error" v-else="error">${error}</span>
+
+                <!-- Add private channel -->
+                <div id="add-private" @click="showModal = true">
+                    ${showModal}
+                    <img src="assets/images/plus.svg" alt="plus">
+                    <modal v-if="showModal" @close="showModal = false"></modal>
+                </div>
             </div>
 
-            <!-- Add private channel -->
-            <div id="add-private">
-                <img src="assets/images/plus.svg" alt="plus">
-            </div>
+
         </div>
 
     </section>
 
     <section id="section-center" class="section column-60 row-100">
-
+        <!-- LOADER -->
+        <div id="mainLoader"></div>
         <!-- Channel title / Channel users -->
         <div id="section-top" class="row-10 border-bottom">
             <h2>Titre de la channel</h2>
@@ -78,8 +83,8 @@
 
         <!-- Text input message -->
         <div id="section-input" class="row-10 border-top">
-            <form class="horizontal">
-                <input type="text" name="send-message" id="send-message" class="column-50" placeholder="Enter your message" v-on:keyup.enter="send" v-model="message">
+            <form class="horizontal" >
+                <input type="text" name="send-message" id="send-message" class="column-50" placeholder="Enter your message" v-on:keyup.enter="send()" v-model="message">
                 <button class="send" @click.prevent="send()" >Send</button>
             </form>
         </div>
@@ -103,8 +108,9 @@
             <div id="listUsers">
                 <template v-if="users.length > 0 && !error">
                     <ul class="type-none">
-                        <li {% if type == 'direct' and id == 3 %}class="channel-active"{% endif %} v-for="user in users">
-                            <a href="?action=chat&type=direct&id=3"><img :src="user.avatar" alt="user" class="img-mini radius">${ user.name }</a>
+                        <li v-for="user in users">
+                            <img :src="user.avatar" alt="user" class="img-mini radius" />
+                            <span>${ user.username }</span>
                         </li>
                     </ul>
                 </template>
@@ -118,7 +124,7 @@
             <div id="listUsersOthers">
                 <template v-if="users.length > 0 && !error">
                     <ul class="type-none">
-                        <li> <img :src="user.avatar" alt="user" class="img-mini radius"> ${ user.name } <a href="?action=chat&link=addFriend"> <img src="assets/images/plus.svg" alt="plus" class="picto-mini"></a></li>
+                        <li> <img :src="user.avatar" alt="user" class="img-mini radius"> ${ user.namename } <a href="?action=chat&link=addFriend"> <img src="assets/images/plus.svg" alt="plus" class="picto-mini"></a></li>
                     </ul>
                 </template>
                 <span class="loading" v-else-if="!error">Loading...</span>
@@ -128,5 +134,36 @@
 
         </div>
     </section>
+    <script type="text/x-template" id="modal-template">
+      <transition name="modal">
+        <div class="modal-mask">
+          <div class="modal-wrapper">
+            <div class="modal-container">
+
+              <div class="modal-header">
+                <slot name="header">
+                  default header
+                </slot>
+              </div>
+
+              <div class="modal-body">
+                <slot name="body">
+                  default body
+                </slot>
+              </div>
+
+              <div class="modal-footer">
+                <slot name="footer">
+                  default footer
+                  <button class="modal-default-button" @click="$emit('close')">
+                    OK
+                  </button>
+                </slot>
+              </div>
+            </div>
+          </div>
+        </div>
+      </transition>
+    </script>
 
 {% endblock %}
