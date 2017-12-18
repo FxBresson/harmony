@@ -64,7 +64,7 @@ class Request {
 
     public function __construct(){
         $this->method = $_SERVER['REQUEST_METHOD'];
-        
+
         if (isset($_GET['classname'])) {
             $this->classname = ucfirst($_GET['classname']);
 
@@ -101,6 +101,13 @@ class Request {
                 foreach($_POST as $attribute => $value) {
                     if (in_array($attribute, $this->classname::$fields)) {
                         $object->{$attribute} = $value;
+                    }
+                }
+                if(isset($_FILES)) {
+                    foreach($_FILES as $attribute => $value) {
+                        if (in_array($attribute, $this->classname::$fields)) {
+                            $object->{$attribute} = $value;
+                        }
                     }
                 }
                 return $object->save();

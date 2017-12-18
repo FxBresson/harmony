@@ -15,13 +15,11 @@ class Channel extends Aida {
     protected $type;
     protected $owner;
 
-
     public function __construct() {
 
     }
 
     public function hydrate() {
-
         parent::hydrate();
 
         $this->type = new ChannelType();
@@ -31,7 +29,6 @@ class Channel extends Aida {
         $this->owner = new User();
         $this->owner->id_user = $this->id_user;
         $this->owner->hydrate();        
-
     }
 
     public function messages() {
@@ -46,9 +43,7 @@ class Channel extends Aida {
     }
 
     public function addOwner() {
-        var_dump($this);
         $query = "INSERT INTO ".get_class($this)::$user_channel_table." (id_user, id_channel) VALUES (".$this->id_user.", ".$this->{Channel::$pk}.");";
         return myQuery($query);
     }
-
 }
