@@ -44,9 +44,9 @@
 
                 <!-- Add private channel -->
                 <div id="add-private" @click="showModal = true">
-                    ${showModal}
                     <img src="assets/images/plus.svg" alt="plus">
-                    <modal v-if="showModal" @close="showModal = false"></modal>
+
+                    <modal v-if="showModal" :show="showModal" @close="closeModal()"></modal>
                 </div>
             </div>
 
@@ -134,7 +134,7 @@
 
         </div>
     </section>
-    <script type="text/x-template" id="modal-template">
+    <template id="modal-template">
       <transition name="modal">
         <div class="modal-mask">
           <div class="modal-wrapper">
@@ -153,17 +153,18 @@
               </div>
 
               <div class="modal-footer">
-                <slot name="footer">
+                <slot name="footer" >
                   default footer
-                  <button class="modal-default-button" @click="$emit('close')">
+                  <button class="modal-default-button" @click="internalValue=false">
                     OK
                   </button>
                 </slot>
               </div>
             </div>
+            <div class="closeModal" @click="internalValue=false"></div>
           </div>
         </div>
       </transition>
-    </script>
+    </template>
 
 {% endblock %}
