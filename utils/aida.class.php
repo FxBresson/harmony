@@ -55,7 +55,7 @@ class Aida {
             //Insert
             $query = "INSERT INTO ".get_class($this)::$table_name." (".implode(", ", get_class($this)::$fields).") VALUES (".implode(", ", $values).");";
             
-            return $insert = myQuery($query);
+            return myQuery($query);
 
         } else {
             //update
@@ -65,7 +65,7 @@ class Aida {
             }
             $query = "UPDATE ".get_class($this)::$table_name." SET ".implode(", ", $arr)." WHERE ".get_class($this)::$pk."=".$this->{get_class($this)::$pk}.";";
             
-            return $update = myQuery($query);
+            return myQuery($query);
         }
     }
 
