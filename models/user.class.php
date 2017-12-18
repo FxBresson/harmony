@@ -32,24 +32,33 @@ class User extends Aida {
     }
 
     public function channels() {
+        return array($this->chanPublic(), $this->chanPrivate());
+    }
+
+    public function chanPublic() {
         $channels = Channel::$table_name;
+        $query =  "SELECT * FROM ".$channels." WHERE ".$channels.".id_type = 1;";
+        return myFetchAllAssoc($query);
+    }
+
+    public function chanPrivate() {
+        $channels = Channel::$table_name;
+        $users_in_channels = User::$user_channel_table;
         $prefix = function($field) {
             return Channel::$table_name.".".$field;
         };
         $map = array_map($prefix, Channel::$fields);
         array_unshift($map, $prefix(Channel::$pk));
         $channels_fields = implode(', ', $map);
-        $users_in_channels = User::$user_channel_table;
-        $query =  "SELECT ".$channels_fields." FROM ".$channels." LEFT JOIN ".$users_in_channels." USING(".Channel::$pk.") WHERE ".$channels.".id_type = 1 OR ".$channels.".id_type = 2 AND ".$users_in_channels.".".User::$pk." = ".$this->{User::$pk}.";";
-        return myFetchAllAssoc($query);
-    }
+        $query =  "SELECT ".$channels_fields." FROM ".$channels." LEFT JOIN ".$users_in_channels." USING(".Channel::$pk.") WHERE ".$channels.".id_type = 2 AND ".$users_in_channels.".".User::$pk." = ".$this->{User::$pk}.";";
+        return myFetchAllAssoc($query);    }
 
 
     public function createDM() {
         $id_user_dmed = $_GET['parameter'];
-        
+
         //check if not already DM
-        
+
         $channel = new Channel();
         $channel->id_type = 3;
         $channel->name = $this->{User::$pk}.'|'.$id_user_dmed;
@@ -71,46 +80,56 @@ class User extends Aida {
         foreach($usersList as $index => $user) {
             $userListProper[$user['id_user']] = $user;
         }
-        
+
         $queryFriends = "SELECT * FROM ".User::$friends_table." WHERE (id_user_1=".$this->{User::$pk}." OR id_user_2=".$this->{User::$pk}.") AND status = 1";
         $friendsList = myFetchAllAssoc($queryFriends);
         foreach ($friendsList as $index => $friend) {
             $friendId = $this->{User::$pk} === $friend['id_user_1'] ? $friend['id_user_2'] : $friend['id_user_1'];
             $userListProper[$friendId]['friend'] = true;
         }
-        
+
         $queryDM = "SELECT * FROM ".User::$dm_table." WHERE (id_user_1=".$this->{User::$pk}." OR id_user_2=".$this->{User::$pk}.")";
         $DMList = myFetchAllAssoc($queryDM);
         foreach ($DMList as $index => $dm) {
             $dmId = $this->{User::$pk} === $dm['id_user_1'] ? $dm['id_user_2'] : $dm['id_user_1'];
             $userListProper[$dmId]['dm_id_channel'] = $dm['id_channel'];
         }
-        
+
         return $userListProper;
     }
 
-    
+
     public static function queryFriends($id1, $id2) {
         return "(id_user1=".$id1." AND id_user2=".$id2.") OR (id_user_1=".$id2." AND id_user_2=".$id1.")";
     }
-    
 
-    protected function leaveChannel($id_channel) {
+
+    public function chanleave() {
+        //Check if channel Private
+        $id_channel = $_GET['parameter'];
+        
         return myQuery("DELETE FROM ".User::$user_channel_table." WHERE ".Channel::$pk."=".$id_channel." AND ".User::$pk."=".$this->{User::$pk}.";");
     }
 
-    protected function sendInvite($id_requested_friend) {
+    public function inviteSend() {
+        //Check if not already invite
+        $id_requested_friend = $_GET['parameter'];
         $query = "INSERT INTO ".User::$friends_table." (id_user_1, id_user_2, status) VALUES (".$this->{User::$pk}.",".$id_requested_friend.", 2);";
-        return $insert = myQuery($query);
+        myQuery($query);
+        return $this->{User::$pk};
     }
 
-    protected function acceptInvite($id_invite) {
-        $query = "UPDATE ".User::$friends_table." SET status=1 WHERE id=".$id_invite.";";
-        return $update = myQuery($query);
+    public function inviteAccept() {
+        $id_initiator = $_GET['parameter'];
+        
+        $query = "UPDATE ".User::$friends_table." SET status=1 WHERE id_user_1=".$id_initiator." AND id_user_2=".$this->{User::$pk}.";";
+        return myQuery($query);
     }
 
-    protected function refuseInvite($id_invite) {
-        $query = "UPDATE ".User::$friends_table." SET status=1 WHERE id=".$id_invite.";";
-        return $update = myQuery($query);
+    public function inviteRefuse() {
+        $id_initiator = $_GET['parameter'];
+        
+        $query = "UPDATE ".User::$friends_table." SET status=0 WHERE id_user_1=".$id_initiator." AND id_user_2=".$this->{User::$pk}.";";
+        return myQuery($query);
     }
 }
