@@ -15,7 +15,6 @@ class User extends Aida {
     public static $friends_table = 'friends';
     public static $dm_table = 'dm';
 
-
     public function __construct() {
     }
 
@@ -23,6 +22,20 @@ class User extends Aida {
         if (in_array($attr_name, get_class($this)::$fields) || $attr_name === get_class($this)::$pk) {
             if ($attr_name === 'password') {
                 $this->$attr_name = password_hash($attr_value, PASSWORD_DEFAULT);
+            } else if ($attr_name === 'avatar') {
+                if(isset($_FILES['avatar'])) { 
+                    $dossier = '/public/avatar/';
+                    var_dump($this->username);
+                    $fichier = basename($_FILES['avatar']['name']);
+                    $pathname = $dossier.$fichier;
+                    if(move_uploaded_file($_FILES['avatar']['tmp_name'], $pathname)) {
+                        $this->$attr_name = $pathname;
+                    } else {
+                        echo 'Echec de l\'upload !';
+                    }
+                } else {
+                    //avatar par défaut
+                }
             } else {
                 $this->$attr_name = $attr_value;
             }
@@ -51,7 +64,8 @@ class User extends Aida {
         array_unshift($map, $prefix(Channel::$pk));
         $channels_fields = implode(', ', $map);
         $query =  "SELECT ".$channels_fields." FROM ".$channels." LEFT JOIN ".$users_in_channels." USING(".Channel::$pk.") WHERE ".$channels.".id_type = 2 AND ".$users_in_channels.".".User::$pk." = ".$this->{User::$pk}.";";
-        return myFetchAllAssoc($query);    }
+        return myFetchAllAssoc($query);    
+    }
 
 
     public function createDM() {
@@ -107,7 +121,7 @@ class User extends Aida {
     public function chanleave() {
         //Check if channel Private
         $id_channel = $_GET['parameter'];
-        
+
         return myQuery("DELETE FROM ".User::$user_channel_table." WHERE ".Channel::$pk."=".$id_channel." AND ".User::$pk."=".$this->{User::$pk}.";");
     }
 
@@ -121,14 +135,14 @@ class User extends Aida {
 
     public function inviteAccept() {
         $id_initiator = $_GET['parameter'];
-        
+
         $query = "UPDATE ".User::$friends_table." SET status=1 WHERE id_user_1=".$id_initiator." AND id_user_2=".$this->{User::$pk}.";";
         return myQuery($query);
     }
 
     public function inviteRefuse() {
         $id_initiator = $_GET['parameter'];
-        
+
         $query = "UPDATE ".User::$friends_table." SET status=0 WHERE id_user_1=".$id_initiator." AND id_user_2=".$this->{User::$pk}.";";
         return myQuery($query);
     }
