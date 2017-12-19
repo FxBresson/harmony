@@ -2,7 +2,7 @@ let listUsers = (socket) => {
 	let $listUsers = document.getElementById('listUsers')
 	if($listUsers) {
 		let error = null
-		socket.emit('get_users')
+		socket.emit('get_users', current_user)
 		socket.on('return_users', (data)=> {
 			if(data === null) {
 				data  = []

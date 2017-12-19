@@ -89,8 +89,8 @@ io.on('connection', (socket)=>{
 	})
 
 
-	socket.on('get_users', () => {
-		request(currentNamespace+'/api/user', { json: true }, (err, res, body) => {
+	socket.on('get_users', (userId) => {
+		request(currentNamespace+'/api/user/'+userId+'/userlist', { json: true }, (err, res, body) => {
 		  	if (err) {
 		  		io.emit('return_users', {'error': err})
 		  		return console.log(err)
