@@ -170,13 +170,11 @@ io.on('connection', (socket)=>{
 	})
 
 	socket.on('select_chan', (id)=> {
-		console.log(currentNamespace+'/api/channel/'+id)
 		request(currentNamespace+'/api/channel/'+id, { json: true }, (err, res, body) => {
 		  	if (err) {
 		  		socket.emit('return_messages', {'error': err})
 		  		return console.log(err)
 		  	}
-		  	console.log(res.body)
 			socket.emit('select_chan', res.body)
 		})
 	})

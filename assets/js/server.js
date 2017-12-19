@@ -218,13 +218,11 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('select_chan', function (id) {
-		console.log(currentNamespace + '/api/channel/' + id);
 		(0, _request2.default)(currentNamespace + '/api/channel/' + id, { json: true }, function (err, res, body) {
 			if (err) {
 				socket.emit('return_messages', { 'error': err });
 				return console.log(err);
 			}
-			console.log(res.body);
 			socket.emit('select_chan', res.body);
 		});
 	});
