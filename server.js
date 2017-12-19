@@ -119,6 +119,7 @@ io.on('connection', (socket)=>{
 	})
 
 	socket.on('send_message', (message) => {
+		console.log(message)
 		request.post({url:currentNamespace+'/api/message', form:message }, (err,httpResponse,body) => {
 			if (err) {
 				console.log(err)
@@ -167,6 +168,10 @@ io.on('connection', (socket)=>{
 			console.log(httpResponse)
 			io.emit('success_create_channel')
 		})
+	})
+
+	socket.on('select_chan', (id)=> {
+		io.emit('select_chan', id)
 	})
 
 	socket.on('disconnect', ()=>{
