@@ -50,44 +50,55 @@ io.on('connection', function (socket) {
 				return err;
 			}
 			var error = "";
+			var i = void 0,
+			    index = void 0,
+			    len = void 0,
+			    bddUser = void 0;
+
+			for (index = i = 0, len = res.body.length; i < len; index = ++i) {
+				bddUser = res.body[index];
+				if (user.username == bddUser.username || user.username == bddUser.email) {
+					error = "";
+					comparePassword(user.password, bddUser.password, function (errPass, passCorrect) {
+						if (errPass) {
+							console.log('error decrypting password', errPass);
+							return errPass;
+						}
+						if (passCorrect) {
+							// User exist and password match
+							io.emit('success_connect', { url: currentNamespace + '/?action=chat', userId: bddUser.id_user });
+						} else {
+							// User existe but password doest match
+							io.emit('error_connect', "Password wrong.");
+						}
+					});
+				} else {
+					if (index + 1 === res.body.length) {
+						io.emit('error_connect', "username or email doesn't exist.");
+					}
+				}
+			}
+		});
+	});
+
+	socket.on('create_user', function (user) {
+		(0, _request2.default)(currentNamespace + '/api/user', { json: true }, function (err, res, body) {
+			if (err) {
+				console.log(err);
+				return err;
+			}
+			var error = "";
 			var _iteratorNormalCompletion = true;
 			var _didIteratorError = false;
 			var _iteratorError = undefined;
 
 			try {
-				var _loop = function _loop() {
+				for (var _iterator = res.body[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 					var bddUser = _step.value;
 
-					console.log(user.username, bddUser.username, bddUser.email);
-					if (user.username == bddUser.username || user.username == bddUser.email) {
-						error = "";
-						cryptPassword(user.password, function (cryptErr, hash) {
-							if (cryptErr) {
-								console.log('error crypting password', cryptErr);
-								return cryptErr;
-							}
-							comparePassword(user.password, bddUser.password, function (errPass, passCorrect) {
-								if (errPass) {
-									console.log('error decrypting password', errPass);
-									return errPass;
-								}
-								console.log(passCorrect);
-								if (passCorrect) {
-									// User exist and password match
-									io.emit('success_connect', { url: currentNamespace + '/?action=chat', userId: bddUser.id });
-								} else {
-									// User existe but password doest match
-									error = "Password wrong.";
-								}
-							});
-						});
-					} else {
-						error = "username or email doesn't exist.";
+					if (user.username === bddUser.username || user.email === bddUser.email) {
+						error = "User or Email already exist.";
 					}
-				};
-
-				for (var _iterator = res.body[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-					_loop();
 				}
 			} catch (err) {
 				_didIteratorError = true;
@@ -104,47 +115,6 @@ io.on('connection', function (socket) {
 				}
 			}
 
-			console.log('error');
-			if (error != '') {
-				io.emit('error_connect', error);
-			}
-		});
-	});
-
-	socket.on('create_user', function (user) {
-		(0, _request2.default)(currentNamespace + '/api/user', { json: true }, function (err, res, body) {
-			if (err) {
-				console.log(err);
-				return err;
-			}
-			var error = "";
-			var _iteratorNormalCompletion2 = true;
-			var _didIteratorError2 = false;
-			var _iteratorError2 = undefined;
-
-			try {
-				for (var _iterator2 = res.body[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-					var _bddUser = _step2.value;
-
-					if (user.username === _bddUser.username || user.email === _bddUser.email) {
-						error = "User or Email already exist.";
-					}
-				}
-			} catch (err) {
-				_didIteratorError2 = true;
-				_iteratorError2 = err;
-			} finally {
-				try {
-					if (!_iteratorNormalCompletion2 && _iterator2.return) {
-						_iterator2.return();
-					}
-				} finally {
-					if (_didIteratorError2) {
-						throw _iteratorError2;
-					}
-				}
-			}
-
 			if (error == '') {
 				cryptPassword(user.password, function (cryptErr, hash) {
 					if (cryptErr) {
@@ -152,13 +122,13 @@ io.on('connection', function (socket) {
 						return cryptErr;
 					}
 					user.password = hash;
+					console.log("------", hash);
 					_request2.default.post({ url: currentNamespace + '/api/user', form: user }, function (err, httpResponse, body) {
 						if (err) {
 							console.log(err);
 							return err;
 						}
-
-						io.emit('success_connect', { url: currentNamespace + '/?action=chat', userId: 1 });
+						io.emit('success_connect', { url: currentNamespace + '/?action=chat', userId: body });
 					});
 				});
 			} else {
