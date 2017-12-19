@@ -5,6 +5,7 @@ import channelsList from './views/chat/listChannels.js'
 import chatbox 		from './views/chat/chatbox.js'
 import loader 		from './views/chat/loader.js'
 import profil 		from './views/chat/profile.js'
+import header 		from './views/chat/headerChat.js'
 
 
 
@@ -30,6 +31,7 @@ class App {
 		chatbox(this.socket)
 		loader(this.socket)
 		profil(this.socket)
+		header(this.socket)
 	}
 
 	initSignin() {

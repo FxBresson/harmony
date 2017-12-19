@@ -19,11 +19,15 @@ let listChannels = (socket) => {
 		        },
 		        methods:{
 		        	selectChan: function(id) {
-		        		this.selected = id
-		        		$selected.value = id
+		        		socket.emit('select_chan', id)
+		        		console.log('emit select_chan')
 		        		socket.emit('get_channel_messages', id)
 		        	}
 		        }
+		    })
+
+		    socket.on('select_chan', (chan) => {
+		    	vueListChannels.selected = chan.id_channel
 		    })
 		})
 	}

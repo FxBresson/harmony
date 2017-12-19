@@ -34,7 +34,8 @@ let listPrivates = (socket) => {
 	        	error: null,
 	        	showModal: false,
 	        	title: '',
-	        	description:''
+	        	description:'',
+	        	selected: null
 	        },
 	        methods: {
         		closeModal: function() {
@@ -59,6 +60,10 @@ let listPrivates = (socket) => {
         			this.$children[0].internalDesc = ''
         			socket.emit('create_channel', privateChan)
 
+        		},
+        		selectChan: function(id) {
+        			socket.emit('select_chan', id)
+        			socket.emit('get_channel_messages', id)
         		}
         	}
 	    })
@@ -72,6 +77,10 @@ let listPrivates = (socket) => {
 			vueListPrivates.error = error
 
 		})
+
+		socket.on('select_chan', (chan) => {
+	    	vueListPrivates.selected = chan.id_channel
+	    })
 
 
 		socket.on('success_create_channel', ()=> {

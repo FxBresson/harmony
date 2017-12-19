@@ -17,7 +17,6 @@ let profile = (socket) => {
 	    socket.emit('get_current_user', current_user)
 
 	    socket.on('success_get_current_user', (user) => {
-	    	console.log('pp', user)
 	    	vueprofile.user = user
 	    })
 	}
