@@ -73,7 +73,6 @@ io.on('connection', (socket)=>{
 						return cryptErr
 					}
 					user.password = hash
-					console.log(user)
 					request.post({url:currentNamespace+'/api/user', form:user }, (err,httpResponse,body) => {
 						if(err) {
 							console.log(err)
@@ -96,6 +95,16 @@ io.on('connection', (socket)=>{
 		  		return console.log(err)
 		  	}
 			io.emit('return_users', res.body)
+		})
+	})
+
+	socket.on('get_current_user', (userId) => {
+		request(currentNamespace+'/api/user/'+userId, { json: true }, (err, res, body) => {
+		  	if (err) {
+		  		io.emit('error_get_current_user', {'error': err})
+		  		return console.log(err)
+		  	}
+			io.emit('success_get_current_user', res.body)
 		})
 	})
 

@@ -122,7 +122,6 @@ io.on('connection', function (socket) {
 						return cryptErr;
 					}
 					user.password = hash;
-					console.log("------", hash);
 					_request2.default.post({ url: currentNamespace + '/api/user', form: user }, function (err, httpResponse, body) {
 						if (err) {
 							console.log(err);
@@ -137,13 +136,23 @@ io.on('connection', function (socket) {
 		});
 	});
 
-	socket.on('get_users', function () {
-		(0, _request2.default)(currentNamespace + '/api/user', { json: true }, function (err, res, body) {
+	socket.on('get_users', function (userId) {
+		(0, _request2.default)(currentNamespace + '/api/user/' + userId + '/userlist', { json: true }, function (err, res, body) {
 			if (err) {
 				io.emit('return_users', { 'error': err });
 				return console.log(err);
 			}
 			io.emit('return_users', res.body);
+		});
+	});
+
+	socket.on('get_current_user', function (userId) {
+		(0, _request2.default)(currentNamespace + '/api/user/' + userId, { json: true }, function (err, res, body) {
+			if (err) {
+				io.emit('error_get_current_user', { 'error': err });
+				return console.log(err);
+			}
+			io.emit('success_get_current_user', res.body);
 		});
 	});
 

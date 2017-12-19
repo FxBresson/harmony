@@ -94,8 +94,8 @@
 
         <!-- User profil -->
         <div id="section-profile" class="row-10 border-bottom">
-            <img src="assets/images/user-img.png" alt="user" class="img-mini radius">
-            <p>My profile</p>
+            <img :src="user.avatar" alt="user" class="img-mini radius">
+            <p>${user.username}</p>
             <a href="?action=profile"><img src="assets/images/profile.svg" alt="profile" class="img-mini"></a>
         </div>
 
