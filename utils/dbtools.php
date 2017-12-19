@@ -5,7 +5,7 @@ function myQuery($query)
     global $link;
 
     if (empty($link))
-        $link = mysqli_connect('localhost', 'root', 'azerty', 'harmony') or die (mysqli_connect_error());
+        $link = mysqli_connect('localhost', 'root', 'root', 'harmony') or die (mysqli_connect_error());
     $result = mysqli_query($link, $query) or die (mysqli_error($link));
     return $result;
 }
@@ -37,7 +37,7 @@ function myFetchAllAssoc($query)
     return $tab_res;
 }
 
-function getLastId() 
+function getLastId()
 {
     global $link;
     return mysqli_insert_id($link);

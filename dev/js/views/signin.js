@@ -11,6 +11,7 @@ let signin = (socket) => {
         	email:'',
         	password:'',
         	confirmPassword:'',
+            battletag: '',
         	errorConfirmPassword:false,
         	globalError:false,
         	loading:false
@@ -38,7 +39,8 @@ let signin = (socket) => {
         			let user = {
         				username : this.name,
         				email: this.email,
-        				password : this.password
+        				password : this.password,
+                        battletag: this.battletag
         			}
         			socket.emit('create_user', user)
         		}
