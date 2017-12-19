@@ -1,5 +1,5 @@
 /node_modules
 /node_modules/**/*
 /.sass-cache
-/assets/js
-/assets/css
+/assets/js/**/*
+/assets/css/**/*

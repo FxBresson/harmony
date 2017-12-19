@@ -26,37 +26,30 @@ io.on('connection', (socket)=>{
 				return err
 			}
 			let error = ""
-			for( let bddUser of res.body ) {
-				console.log(user.username , bddUser.username, bddUser.email)
+			let i, index, len, bddUser
+
+			for (index = i = 0, len = res.body.length; i < len; index = ++i) {
+				bddUser = res.body[index]
 				if(user.username == bddUser.username || user.username == bddUser.email) {
 					error = ""
-					cryptPassword(user.password, (cryptErr, hash) => {
-						if(cryptErr) {
-							console.log('error crypting password', cryptErr)
-							return cryptErr
+					comparePassword(user.password, bddUser.password, (errPass, passCorrect) => {
+						if(errPass) {
+							console.log('error decrypting password', errPass)
+							return errPass
 						}
-						comparePassword(user.password, bddUser.password, (errPass, passCorrect) => {
-							if(errPass) {
-								console.log('error decrypting password', errPass)
-								return errPass
-							}
-							console.log(passCorrect)
-							if (passCorrect) {
-								// User exist and password match
-								io.emit('success_connect', {url:currentNamespace+'/?action=chat', userId:bddUser.id })
-							} else {
-								// User existe but password doest match
-								error = "Password wrong."
-							}
-						})
+						if (passCorrect) {
+							// User exist and password match
+							io.emit('success_connect', {url:currentNamespace+'/?action=chat', userId:bddUser.id_user })
+						} else {
+							// User existe but password doest match
+							io.emit('error_connect', "Password wrong.")
+						}
 					})
 				} else {
-					error = "username or email doesn't exist."
+					if(index+1 === res.body.length) {
+						io.emit('error_connect', "username or email doesn't exist.")
+					}
 				}
-			}
-			console.log('error')
-			if(error != '') {
-				io.emit('error_connect', error)
 			}
 		})
 	})
@@ -85,8 +78,7 @@ io.on('connection', (socket)=>{
 							console.log(err)
 							return err
 						}
-
-						io.emit('success_connect', {url:currentNamespace+'/?action=chat', userId:1 })
+						io.emit('success_connect', {url:currentNamespace+'/?action=chat', userId:body })
 					})
 				})
 			} else {
@@ -96,8 +88,8 @@ io.on('connection', (socket)=>{
 	})
 
 
-	socket.on('get_users', () => {
-		request(currentNamespace+'/api/user', { json: true }, (err, res, body) => {
+	socket.on('get_users', (userId) => {
+		request(currentNamespace+'/api/user/'+userId+'/userlist', { json: true }, (err, res, body) => {
 		  	if (err) {
 		  		io.emit('return_users', {'error': err})
 		  		return console.log(err)

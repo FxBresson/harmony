@@ -20,14 +20,12 @@ class User extends Aida {
 
     public function __set($attr_name, $attr_value) {
         if (in_array($attr_name, get_class($this)::$fields) || $attr_name === get_class($this)::$pk) {
-            if ($attr_name === 'password') {
-                $this->$attr_name = password_hash($attr_value, PASSWORD_DEFAULT);
-            } else if ($attr_name === 'avatar') {
+            if ($attr_name === 'avatar') {
                 if(isset($_FILES['avatar'])) { 
                     $dossier = realpath('../public/avatar/');
                     $fichier = basename($_FILES['avatar']['name']);
                     $ext = pathinfo($fichier, PATHINFO_EXTENSION);
-                    
+
                     $pathname = $dossier.'/'.$this->username.'#'.$this->battletag.'.'.$ext;
                     if(move_uploaded_file($_FILES['avatar']['tmp_name'], $pathname)) {
                         $this->$attr_name = $pathname;
@@ -89,29 +87,40 @@ class User extends Aida {
 
     public function userList() {
         $list = User::selectAll();
-        $queryUsers = "SELECT id_user, username, avatar, sr, available, battletag FROM ".User::$table_name;
+        $queryUsers = "SELECT id_user, username, avatar, sr, available, battletag FROM ".User::$table_name." WHERE ".User::$pk." != ".$this->{User::$pk}.";";
         $usersList = myFetchAllAssoc($queryUsers);
-        $userListProper = [];
+        $userListIndexed = [];
         foreach($usersList as $index => $user) {
-            $userListProper[$user['id_user']] = $user;
+            $userListIndexed[$user['id_user']] = $user;
         }
 
         $queryFriends = "SELECT * FROM ".User::$friends_table." WHERE (id_user_1=".$this->{User::$pk}." OR id_user_2=".$this->{User::$pk}.") AND status = 1";
         $friendsList = myFetchAllAssoc($queryFriends);
         foreach ($friendsList as $index => $friend) {
             $friendId = $this->{User::$pk} === $friend['id_user_1'] ? $friend['id_user_2'] : $friend['id_user_1'];
-            $userListProper[$friendId]['friend'] = true;
+            $userListIndexed[$friendId]['friend'] = true;
         }
 
         $queryDM = "SELECT * FROM ".User::$dm_table." WHERE (id_user_1=".$this->{User::$pk}." OR id_user_2=".$this->{User::$pk}.")";
         $DMList = myFetchAllAssoc($queryDM);
         foreach ($DMList as $index => $dm) {
             $dmId = $this->{User::$pk} === $dm['id_user_1'] ? $dm['id_user_2'] : $dm['id_user_1'];
-            $userListProper[$dmId]['dm_id_channel'] = $dm['id_channel'];
+            $userListIndexed[$dmId]['dm_id_channel'] = $dm['id_channel'];
         }
 
-        return $userListProper;
+        $friends = [];
+        $others = [];
+        foreach($userListIndexed as $index => $user) {
+            if (isset($user['friend'])) {
+                $friends[] = $user;
+            } else {
+                $others[] = $user;
+            }
+        }
+        
+        return array_merge($friends, $others);
     }
+
 
 
     public static function queryFriends($id1, $id2) {
