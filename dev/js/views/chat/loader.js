@@ -1,5 +1,7 @@
 let loader = (socket) => {
-	let currentChan = document.getElementById('selectedChannel').value
+	let currentChan
+	if(document.getElementById('selectedChannel') ) {currentChan = document.getElementById('selectedChannel').value}
+
 	let $loader = document.getElementById('mainLoader')
 	if($loader) {
 		let $submit = document.getElementsByClassName('send')[0]

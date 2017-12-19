@@ -18,6 +18,7 @@
   user-select: none;
   vertical-align: middle;
   white-space: nowrap;
+  position:relative;
   &:focus {
     @include control-shadow();
   }
@@ -152,7 +153,32 @@
     }
   }
 }
+.loading::after {
+    animation: loading 500ms infinite linear;
+    border: .1rem solid #5755d9;
+    border-radius: 50%;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    content: "";
+    display: block;
+    height: .8rem;
+    left: 50%;
+    margin-left: -.4rem;
+    margin-top: -.4rem;
+    position: absolute;
+    top: 50%;
+    width: .8rem;
+    z-index: 1;
+}
 
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 // Button groups
 .btn-group {
   display: inline-flex;

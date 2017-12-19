@@ -2,27 +2,56 @@
 
 {% block title %}Welcome to Harmony!{% endblock %}
 
-{% block bodyClass %}home page-template{% endblock %}
+{% block bodyClass %}home page-template signin{% endblock %}
 
 {% block content %}
 
-    <section id="section-form">
 
-        <form action="post" action="" class="vertical">
+<div id="signin">
+    <div class="container">
+        <span class="form-input-hint" v-if='globalError != false'>${globalError}</span>
+        <div class="formHolder signup" v-if="current == 'signup'">
+            <h3>Sign Up</h3>
+            <div class="form-group">
+                <input class="form-input" type="text" id="signupName" placeholder="Username" v-model="name">
+            </div>
 
-            <input type="text" name="login" placeholder="Enter your login" required>
-            <input type="password" name="password" placeholder="Enter your password" required>
-            <input type="submit" value="Connect">
+            <div class="form-group">
+                <input class="form-input" type="text" id="signupEmail" placeholder="Email" v-model="email">
+            </div>
 
-        </form>
+            <div class="form-group">
+                <input type="password" class="form-input" id="signupPassword" placeholder="Password" v-model="password">
+            </div>
 
-    </section>
+            <div class="form-group">
 
-    <section id="section-link">
+                <input type="password" class="form-input" id="confirmPassword" placeholder="Confirm password" v-model="confirmPassword">
+                <span class="form-input-hint" v-if='errorConfirmPassword'>Le second mot de passe ne correspond pas au premier.</span>
+            </div>
 
-        <p><a href="?action=forgot_password_form">Forgot password?</a></p>
-        <p><a href="?action=register_form">Register</a></p>
+            <button type="submit" id="signupButton" class="btn btn-sm btn-default simplebutton newAccButton" :class="{'loading':loading}" :disabled=" name == '' || password == '' || confirmPassword == '' " @click.prevent="newAccount()" >Sign Up</button>
+            <button class="btn btn-sm btn-link loginButton" id="showLogin" @click="toggle('login')" >Already have an account?</button>
 
-    </section>
+        </div>
+        <div class="formHolder login" v-if="current == 'login'">
+
+            <h3>Login</h3>
+
+            <div class="form-group">
+                <input class="form-input" type="text" id="name" placeholder="Username, Email" v-model="name">
+            </div>
+
+            <div class="form-group">
+                <input type="password" class="form-input" id="password" placeholder="Password" v-model="password">
+            </div>
+
+            <button type="submit" id="loginButton" class="btn btn-sm btn-default simplebutton loginButton" :class="{'loading':loading}" :disabled=" name == '' || password == '' " @click.prevent="login()">Login</button><button type="submit" class="btn btn-sm btn-link newAccButton" id="showSignUp" @click="toggle('signup')">Don't have an account?</button>
+
+        </div>
+
+    </div>
+</div>
+
 
 {% endblock %}
