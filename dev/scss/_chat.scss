@@ -1,16 +1,43 @@
 @import 'framework/vars.scss';
+
 // Common
 body.chat {
     margin: 0;
+    overflow: hidden;
 }
 
-.channel-active {
-    background-color: rgba(0, 0, 0, 0.2);
+
+// Section
+#section-left , #section-center , #section-users {
+    -webkit-font-smoothing: antialiased;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.01);
 }
 
-.channel-active a,
-.channel-active a:hover {
-    color: #fff;
+#section-left , #section-users {
+    background-color: #87677B;
+
+    ul li {
+        color: #000;
+        cursor: pointer;
+
+        &:hover {
+            color: #fff;
+        }
+    }
+
+    .channel-active {
+        background-color: rgba(0, 0, 0, 0.2);
+        color: #fff;
+        margin-right: 15%;
+        text-align: center;
+
+        a, a:hover {
+            color: #fff;
+        }
+    }
+}
+#section-center {
+    background-color: #9A7AA0;
 }
 
 .loaderChan {
@@ -36,36 +63,54 @@ body.chat {
 
         &::before {
             font-size: 35px;
-            color: $primary-color;
+            color: #fff;
         }
     }
-
+    img {
+        width: 22%;
+        cursor: pointer;
+    }
 }
 
 
 // Chat
-#section-chat li {
-    background-color: rgba(0,0,0,0.1);
-}
-#section-chat #chat-avatar img {
-    float: left;
-    width: 5%;
-    margin: 0;
-    margin-right: 2%;
+#section-chat {
+
+    li {
+        color: #000;
+        background-color: rgba(0,0,0,0.1);
+        margin-right: 15%;
+    }
+
+    #chat-avatar img {
+        float: left;
+        width: 5%;
+        margin: 0;
+        margin-right: 2%;
+    }
+
+    #chat-user {
+        font-size: 16px;
+    }
+    #chat-time {
+        font-size: 12px;
+    }
+    #chat-message {
+        font-size: 16px;
+    }
 }
 
-#section-chat #chat-user {
-    font-size: 16px;
-}
-#section-chat #chat-time {
-    font-size: 12px;
-}
-#section-chat #chat-message {
-    font-size: 16px;
-}
+
 
 
 // Profile
 #section-profile img, #section-profile p {
     display: inline-block;
+}
+
+
+
+// Users
+#section-users {
+    overflow-y: scroll;
 }
