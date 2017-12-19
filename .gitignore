@@ -3,3 +3,4 @@
 /.sass-cache
 /assets/js/**/*
 /assets/css/**/*
+/utils/dbtools.php
