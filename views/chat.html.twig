@@ -6,6 +6,7 @@
 
 {% block content %}
 <input id="selectedChannel" type="hidden">
+
 <section id="section-left" class="section column-20 row-100">
     <!-- General channels list -->
     <div id="section-general" class="row-50 border-bottom">
@@ -51,7 +52,13 @@
     <div id="mainLoader"></div>
     <!-- Channel title / Channel users -->
     <div id="section-top" class="row-10 border-bottom">
-        <span class="loaderChan" v-if="!title"></span>
+        <div class="loaderChan" v-if="!title">
+            <img src="assets/images/harmony_logo.png" alt="harmony_logo">
+            <h1>Harmony</h1>
+            <p>Let's chat with your friends!</p>
+            <p>Choose a channel!</p>
+            <p>Have fun! Enjoy!</p>
+        </div>
         <h2>${ title }</h2>
     </div>
 
@@ -77,21 +84,22 @@
     </div>
     <!-- Text input message -->
     <div id="section-input" class="row-10 border-top">
-        <form class="horizontal" >
-            <input type="text" name="send-message" id="send-message" class="column-50" placeholder="Enter your message" v-on:keyup.enter="send()" v-model="message">
-            <button class="send" @click.prevent="send()" >Send</button>
-        </form>
+        <div class="form-group" >
+            <input type="text" name="send-message" id="send-message" class="form-input" placeholder="Enter your message" v-on:keyup.enter="send()" v-model="message">
+            <button class="send btn btn-sm btn-default simplebutton newAccButton" @click.prevent="send()" >Send</button>
+        </div>
     </div>
 </section>
 
 <!-- Users list -->
-<section id="section-users" class="section column-19 row-100">
+<section id="section-right" class="section column-20 row-100">
 
     <!-- User profil -->
     <div id="section-profile" class="row-10 border-bottom">
-        <img :src="user.avatar" alt="user" class="img-mini radius">
+        <img v-if="user.avatar" :src="user.avatar" alt="user" class="img-mini radius">
+        <img v-if="!user.avatar" src="assets/images/avatar_default.jpg" alt="user" class="img-mini radius">
         <p>${user.username}</p>
-        <a href="?action=profile"><img src="assets/images/profile.svg" alt="profile" class="img-mini"></a>
+        <button class="add icon icon-profile" @click="showModal = true">profile</button>
     </div>
 
     <!-- Users -->
@@ -108,10 +116,10 @@
                         <span>${ user.username }</span>
                         <span v-if="user.battletag">#${ user.battletag }</span>
                         <div class="btn-action">
-                            <span v-if="" @click.prevent="sendMessage(channel.id_channel)">MESSAGE</span>
-                            <span v-if="!user.friend && !user.invite" @click.prevent="sendInvite(user.id_user)">FRIEND</span>
-                            <span v-if="user.invite == 'received'" @click.prevent="acceptInvite(user.id_user)">ACCEPT</span>
-                            <span v-if="user.invite == 'received'" @click.prevent="refuseInvite(user.id_user)">REFUSE</span>
+                            <button class="icon icon-message" @click.prevent="sendMessage(channel.id_channel)">message</button>
+                            <button v-if="!user.friend && !user.invite" class="icon icon-friend" @click.prevent="sendInvite(user.id_user)">friend</button>
+                            <button v-if="user.invite == 'received'" @click.prevent="acceptInvite(user.id_user)" class="icon icon-accept" >accept</button>
+                            <button v-if="user.invite == 'received'" @click.prevent="refuseInvite(user.id_user)" class="icon icon-refuse" >refuse</button>
                         </div>
                     </li>
                 </ul>
