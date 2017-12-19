@@ -17,6 +17,7 @@ class App {
 	}
 
 	initChat() {
+		if(Cookie.get('current_user') === undefined){document.location.href = window.location.origin}
 		window.current_user = Cookie.get('current_user')
 		userList(this.socket)
 		messagesList(this.socket)
