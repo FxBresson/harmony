@@ -30,7 +30,11 @@ let chatbox = (socket) => {
 	    })
 
 	    socket.on('success_send_message', (id) => {
-	    	socket.emit('get_channel_messages',idChan )
+	    	if(id != idChan) {
+	    		socket.emit('add_channel_notification', id )
+	    	} else {
+	    		socket.emit('get_channel_messages',idChan )
+	    	}
 	    })
 
 	    socket.on('select_chan', (chan) => {

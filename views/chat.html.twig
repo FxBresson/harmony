@@ -14,6 +14,7 @@
             <template v-if="channels.length > 0 && !error">
                 <ul class="type-none">
                     <li  v-bind:class="{ 'channel-active': channel.id_channel === selected }" v-for="channel in channels" @click.prevent="selectChan(channel.id_channel)" v-if="channel.id_type == 1">
+                        <span class="notification" v-if="channel.notification">${channel.notification}</span>
                         ${ channel.name }
                     </li>
                 </ul>

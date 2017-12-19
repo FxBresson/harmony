@@ -172,7 +172,8 @@ io.on('connection', function (socket) {
 				console.log(err);
 				return err;
 			}
-			io.emit('success_send_message');
+			console.log('---', message.id_channel);
+			io.emit('success_send_message', message.id_channel);
 		});
 	});
 
@@ -225,6 +226,11 @@ io.on('connection', function (socket) {
 			}
 			socket.emit('select_chan', res.body);
 		});
+	});
+
+	socket.on('add_channel_notification', function (id) {
+		console.log(id);
+		socket.emit('add_channel_notification', id);
 	});
 
 	socket.on('disconnect', function () {

@@ -124,7 +124,7 @@ io.on('connection', (socket)=>{
 				console.log(err)
 				return err
 			}
-			io.emit('success_send_message')
+			io.emit('success_send_message', message.id_channel)
 		})
 	})
 
@@ -177,6 +177,10 @@ io.on('connection', (socket)=>{
 		  	}
 			socket.emit('select_chan', res.body)
 		})
+	})
+
+	socket.on('add_channel_notification', (id) => {
+		socket.emit('add_channel_notification', id)
 	})
 
 	socket.on('disconnect', ()=>{
