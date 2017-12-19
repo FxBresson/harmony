@@ -78,9 +78,8 @@ let listPrivates = (socket) => {
 
 		})
 
-		socket.on('select_chan', (id) => {
-			console.log('on_select_chan_privete')
-	    	vueListPrivates.selected = id
+		socket.on('select_chan', (chan) => {
+	    	vueListPrivates.selected = chan.id_channel
 	    })
 
 

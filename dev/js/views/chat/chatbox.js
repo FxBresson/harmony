@@ -33,8 +33,8 @@ let chatbox = (socket) => {
 	    	socket.emit('get_channel_messages',idChan )
 	    })
 
-	    socket.on('select_chan', (id) => {
-	    	vuechatbox.currentChan = id
+	    socket.on('select_chan', (chan) => {
+	    	vuechatbox.currentChan = chan.id_channel
 	    })
 
 	}

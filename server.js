@@ -39,15 +39,15 @@ io.on('connection', (socket)=>{
 						}
 						if (passCorrect) {
 							// User exist and password match
-							io.emit('success_connect', {url:currentNamespace+'/?action=chat', userId:bddUser.id_user })
+							socket.emit('success_connect', {url:currentNamespace+'/?action=chat', userId:bddUser.id_user })
 						} else {
 							// User existe but password doest match
-							io.emit('error_connect', "Password wrong.")
+							socket.emit('error_connect', "Password wrong.")
 						}
 					})
 				} else {
 					if(index+1 === res.body.length) {
-						io.emit('error_connect', "username or email doesn't exist.")
+						socket.emit('error_connect', "username or email doesn't exist.")
 					}
 				}
 			}
@@ -78,11 +78,11 @@ io.on('connection', (socket)=>{
 							console.log(err)
 							return err
 						}
-						io.emit('success_connect', {url:currentNamespace+'/?action=chat', userId:body })
+						socket.emit('success_connect', {url:currentNamespace+'/?action=chat', userId:body })
 					})
 				})
 			} else {
-				io.emit('error_connect', error)
+				socket.emit('error_connect', error)
 			}
 		})
 	})
@@ -91,20 +91,20 @@ io.on('connection', (socket)=>{
 	socket.on('get_users', (userId) => {
 		request(currentNamespace+'/api/user/'+userId+'/userlist', { json: true }, (err, res, body) => {
 		  	if (err) {
-		  		io.emit('return_users', {'error': err})
+		  		socket.emit('return_users', {'error': err})
 		  		return console.log(err)
 		  	}
-			io.emit('return_users', res.body)
+			socket.emit('return_users', res.body)
 		})
 	})
 
 	socket.on('get_current_user', (userId) => {
 		request(currentNamespace+'/api/user/'+userId, { json: true }, (err, res, body) => {
 		  	if (err) {
-		  		io.emit('error_get_current_user', {'error': err})
+		  		socket.emit('error_get_current_user', {'error': err})
 		  		return console.log(err)
 		  	}
-			io.emit('success_get_current_user', res.body)
+			socket.emit('success_get_current_user', res.body)
 		})
 	})
 
@@ -114,12 +114,11 @@ io.on('connection', (socket)=>{
 		  		io.emit('return_messages', {'error': err})
 		  		return console.log(err)
 		  	}
-			io.emit('return_messages', res.body)
+			socket.emit('return_messages', res.body)
 		})
 	})
 
 	socket.on('send_message', (message) => {
-		console.log(message)
 		request.post({url:currentNamespace+'/api/message', form:message }, (err,httpResponse,body) => {
 			if (err) {
 				console.log(err)
@@ -135,7 +134,7 @@ io.on('connection', (socket)=>{
 		  		io.emit('return_channels', {'error': err})
 		  		return console.log(err)
 		  	}
-			io.emit('return_channels', res.body)
+			socket.emit('return_channels', res.body)
 		})
 	})
 
@@ -145,17 +144,17 @@ io.on('connection', (socket)=>{
 		  		io.emit('return_messages', {'error': err})
 		  		return console.log(err)
 		  	}
-			io.emit('return_messages', res.body)
+			socket.emit('return_messages', res.body)
 		})
 	})
 
 	socket.on('get_privates', (idUser) => {
 		request(currentNamespace+'/api/user/' + idUser + '/chanprivate', { json: true }, (err, res, body) => {
 		  	if (err) {
-		  		io.emit('return_privates', {'error': err})
+		  		socket.emit('return_privates', {'error': err})
 		  		return console.log(err)
 		  	}
-			io.emit('return_privates', res.body)
+			socket.emit('return_privates', res.body)
 		})
 	})
 
@@ -166,12 +165,20 @@ io.on('connection', (socket)=>{
 				return err
 			}
 			console.log(httpResponse)
-			io.emit('success_create_channel')
+			socket.emit('success_create_channel')
 		})
 	})
 
 	socket.on('select_chan', (id)=> {
-		io.emit('select_chan', id)
+		console.log(currentNamespace+'/api/channel/'+id)
+		request(currentNamespace+'/api/channel/'+id, { json: true }, (err, res, body) => {
+		  	if (err) {
+		  		socket.emit('return_messages', {'error': err})
+		  		return console.log(err)
+		  	}
+		  	console.log(res.body)
+			socket.emit('select_chan', res.body)
+		})
 	})
 
 	socket.on('disconnect', ()=>{

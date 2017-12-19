@@ -26,9 +26,8 @@ let listChannels = (socket) => {
 		        }
 		    })
 
-		    socket.on('select_chan', (id) => {
-		    	console.log('on_select_chan_chan', id)
-		    	vueListChannels.selected = id
+		    socket.on('select_chan', (chan) => {
+		    	vueListChannels.selected = chan.id_channel
 		    })
 		})
 	}

@@ -51,7 +51,8 @@
     <div id="mainLoader"></div>
     <!-- Channel title / Channel users -->
     <div id="section-top" class="row-10 border-bottom">
-        <h2>Titre de la channel</h2>
+        <span class="loaderChan" v-if="!title"></span>
+        <h2>${ title }</h2>
     </div>
 
     <!-- Chat -->

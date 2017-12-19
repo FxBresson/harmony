@@ -66,15 +66,15 @@ io.on('connection', function (socket) {
 						}
 						if (passCorrect) {
 							// User exist and password match
-							io.emit('success_connect', { url: currentNamespace + '/?action=chat', userId: bddUser.id_user });
+							socket.emit('success_connect', { url: currentNamespace + '/?action=chat', userId: bddUser.id_user });
 						} else {
 							// User existe but password doest match
-							io.emit('error_connect', "Password wrong.");
+							socket.emit('error_connect', "Password wrong.");
 						}
 					});
 				} else {
 					if (index + 1 === res.body.length) {
-						io.emit('error_connect', "username or email doesn't exist.");
+						socket.emit('error_connect', "username or email doesn't exist.");
 					}
 				}
 			}
@@ -127,11 +127,11 @@ io.on('connection', function (socket) {
 							console.log(err);
 							return err;
 						}
-						io.emit('success_connect', { url: currentNamespace + '/?action=chat', userId: body });
+						socket.emit('success_connect', { url: currentNamespace + '/?action=chat', userId: body });
 					});
 				});
 			} else {
-				io.emit('error_connect', error);
+				socket.emit('error_connect', error);
 			}
 		});
 	});
@@ -139,20 +139,20 @@ io.on('connection', function (socket) {
 	socket.on('get_users', function (userId) {
 		(0, _request2.default)(currentNamespace + '/api/user/' + userId + '/userlist', { json: true }, function (err, res, body) {
 			if (err) {
-				io.emit('return_users', { 'error': err });
+				socket.emit('return_users', { 'error': err });
 				return console.log(err);
 			}
-			io.emit('return_users', res.body);
+			socket.emit('return_users', res.body);
 		});
 	});
 
 	socket.on('get_current_user', function (userId) {
 		(0, _request2.default)(currentNamespace + '/api/user/' + userId, { json: true }, function (err, res, body) {
 			if (err) {
-				io.emit('error_get_current_user', { 'error': err });
+				socket.emit('error_get_current_user', { 'error': err });
 				return console.log(err);
 			}
-			io.emit('success_get_current_user', res.body);
+			socket.emit('success_get_current_user', res.body);
 		});
 	});
 
@@ -162,12 +162,11 @@ io.on('connection', function (socket) {
 				io.emit('return_messages', { 'error': err });
 				return console.log(err);
 			}
-			io.emit('return_messages', res.body);
+			socket.emit('return_messages', res.body);
 		});
 	});
 
 	socket.on('send_message', function (message) {
-		console.log(message);
 		_request2.default.post({ url: currentNamespace + '/api/message', form: message }, function (err, httpResponse, body) {
 			if (err) {
 				console.log(err);
@@ -183,7 +182,7 @@ io.on('connection', function (socket) {
 				io.emit('return_channels', { 'error': err });
 				return console.log(err);
 			}
-			io.emit('return_channels', res.body);
+			socket.emit('return_channels', res.body);
 		});
 	});
 
@@ -193,17 +192,17 @@ io.on('connection', function (socket) {
 				io.emit('return_messages', { 'error': err });
 				return console.log(err);
 			}
-			io.emit('return_messages', res.body);
+			socket.emit('return_messages', res.body);
 		});
 	});
 
 	socket.on('get_privates', function (idUser) {
 		(0, _request2.default)(currentNamespace + '/api/user/' + idUser + '/chanprivate', { json: true }, function (err, res, body) {
 			if (err) {
-				io.emit('return_privates', { 'error': err });
+				socket.emit('return_privates', { 'error': err });
 				return console.log(err);
 			}
-			io.emit('return_privates', res.body);
+			socket.emit('return_privates', res.body);
 		});
 	});
 
@@ -214,12 +213,20 @@ io.on('connection', function (socket) {
 				return err;
 			}
 			console.log(httpResponse);
-			io.emit('success_create_channel');
+			socket.emit('success_create_channel');
 		});
 	});
 
 	socket.on('select_chan', function (id) {
-		io.emit('select_chan', id);
+		console.log(currentNamespace + '/api/channel/' + id);
+		(0, _request2.default)(currentNamespace + '/api/channel/' + id, { json: true }, function (err, res, body) {
+			if (err) {
+				socket.emit('return_messages', { 'error': err });
+				return console.log(err);
+			}
+			console.log(res.body);
+			socket.emit('select_chan', res.body);
+		});
 	});
 
 	socket.on('disconnect', function () {
