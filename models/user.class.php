@@ -15,9 +15,6 @@ class User extends Aida {
     public static $friends_table = 'friends';
     public static $dm_table = 'dm';
 
-    public function __construct() {
-    }
-
     public function __set($attr_name, $attr_value) {
         if (in_array($attr_name, get_class($this)::$fields) || $attr_name === get_class($this)::$pk) {
             if ($attr_name === 'avatar') {
@@ -69,9 +66,7 @@ class User extends Aida {
 
     public function createDM() {
         $id_user_dmed = $_GET['parameter'];
-
         //check if not already DM
-
         $channel = new Channel();
         $channel->id_type = 3;
         $channel->name = $this->{User::$pk}.'|'.$id_user_dmed;
@@ -120,13 +115,6 @@ class User extends Aida {
         
         return array_merge($friends, $others);
     }
-
-
-
-    public static function queryFriends($id1, $id2) {
-        return "(id_user1=".$id1." AND id_user2=".$id2.") OR (id_user_1=".$id2." AND id_user_2=".$id1.")";
-    }
-
 
     public function chanleave() {
         //Check if channel Private

@@ -15,10 +15,6 @@ class Channel extends Aida {
     protected $type;
     protected $owner;
 
-    public function __construct() {
-
-    }
-
     public function hydrate() {
         parent::hydrate();
 
