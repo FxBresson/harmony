@@ -15,9 +15,6 @@ class User extends Aida {
     public static $friends_table = 'friends';
     public static $dm_table = 'dm';
 
-    public function __construct() {
-    }
-
     public function __set($attr_name, $attr_value) {
         if (in_array($attr_name, get_class($this)::$fields) || $attr_name === get_class($this)::$pk) {
             if ($attr_name === 'avatar') {
@@ -69,9 +66,7 @@ class User extends Aida {
 
     public function createDM() {
         $id_user_dmed = $_GET['parameter'];
-
         //check if not already DM
-
         $channel = new Channel();
         $channel->id_type = 3;
         $channel->name = $this->{User::$pk}.'|'.$id_user_dmed;
@@ -101,6 +96,14 @@ class User extends Aida {
             $userListIndexed[$friendId]['friend'] = true;
         }
 
+        $querypending = "SELECT * FROM ".User::$friends_table." WHERE (id_user_1=".$this->{User::$pk}." OR id_user_2=".$this->{User::$pk}.") AND status = 2";
+        $pendingList = myFetchAllAssoc($querypending);
+        foreach ($pendingList as $index => $friend) {
+            $friendId = $this->{User::$pk} === $friend['id_user_1'] ? $friend['id_user_2'] : $friend['id_user_1'];
+            $type_of_invite = $this->{User::$pk} === $friend['id_user_1'] ? 'sent' : 'received';
+            $userListIndexed[$friendId]['invite'] = $type_of_invite;
+        }
+
         $queryDM = "SELECT * FROM ".User::$dm_table." WHERE (id_user_1=".$this->{User::$pk}." OR id_user_2=".$this->{User::$pk}.")";
         $DMList = myFetchAllAssoc($queryDM);
         foreach ($DMList as $index => $dm) {
@@ -109,24 +112,20 @@ class User extends Aida {
         }
 
         $friends = [];
+        $invite = [];
         $others = [];
         foreach($userListIndexed as $index => $user) {
             if (isset($user['friend'])) {
                 $friends[] = $user;
+            } else if (isset($user['invite']) && $user['invite'] === 'received') {
+                $invite[] = $user;
             } else {
                 $others[] = $user;
             }
         }
-        
-        return array_merge($friends, $others);
+
+        return array_merge($invite, $friends, $others);
     }
-
-
-
-    public static function queryFriends($id1, $id2) {
-        return "(id_user1=".$id1." AND id_user2=".$id2.") OR (id_user_1=".$id2." AND id_user_2=".$id1.")";
-    }
-
 
     public function chanleave() {
         //Check if channel Private

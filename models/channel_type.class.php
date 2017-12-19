@@ -8,8 +8,4 @@ class ChannelType extends Aida {
     public static $fields = ['name', 'user_limit', 'voice'];
     public static $table_name = 'channel_types';
 
-    public function __construct() {
-
-    }
-
 }

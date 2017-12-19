@@ -77,14 +77,15 @@ class Request {
 
     private function processRequest() {
         switch ($this->method) {
-            case 'GET':
+
+            case 'GET': 
                 if (!isset($_GET['id'])) {
                     return $this->classname::selectAll();
                 } else {
                     $object = new $this->classname;
                     $object->{$this->classname::$pk} = $_GET['id'];
+                    $object->hydrate();
                     if (!isset($_GET['method'])) {
-                        $object->hydrate();
                         return $object;
                     } else {
                         return $object->{$_GET['method']}();
@@ -92,15 +93,18 @@ class Request {
                 }
 
                 break;
+
             case 'POST':
                 $object = new $this->classname();
                 if (isset($_GET['id'])) {
                     $object->{$this->classname::$pk} = $_GET['id'];
                     $object->hydrate();
                 }
-                foreach($_POST as $attribute => $value) {
-                    if (in_array($attribute, $this->classname::$fields)) {
-                        $object->{$attribute} = $value;
+                if(isset($_POST)) {
+                    foreach($_POST as $attribute => $value) {
+                        if (in_array($attribute, $this->classname::$fields)) {
+                            $object->{$attribute} = $value;
+                        }
                     }
                 }
                 if(isset($_FILES)) {
@@ -110,16 +114,16 @@ class Request {
                         }
                     }
                 }
-                return $object->save();
 
+                return $object->save();
                 break;
+
             case 'DELETE':
                 if (isset($_GET['id'])) {
                     $object = new $this->classname;
                     $object->{$this->classname::$pk} = $_GET['id'];
                     return $object->delete();
                 }
-
                 break;
         }
 

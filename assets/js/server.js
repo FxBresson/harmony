@@ -172,7 +172,6 @@ io.on('connection', function (socket) {
 				console.log(err);
 				return err;
 			}
-			console.log('---', message.id_channel);
 			io.emit('success_send_message', message.id_channel);
 		});
 	});
@@ -228,8 +227,40 @@ io.on('connection', function (socket) {
 		});
 	});
 
+	socket.on('send_invite', function (users) {
+		(0, _request2.default)(currentNamespace + '/api/user/' + users.current_user + '/invitesend/' + users.user_to_invite, { json: true }, function (err, httpResponse, body) {
+			if (err) {
+				console.log(err);
+				return err;
+			}
+			console.log(httpResponse);
+			io.emit('success_friend_interraction');
+		});
+	});
+
+	socket.on('accept_invite', function (users) {
+		(0, _request2.default)(currentNamespace + '/api/user/' + users.current_user + '/inviteaccept/' + users.user_initiator, { json: true }, function (err, httpResponse, body) {
+			if (err) {
+				console.log(err);
+				return err;
+			}
+			console.log(httpResponse);
+			io.emit('success_friend_interraction');
+		});
+	});
+
+	socket.on('refuse_invite', function (users) {
+		(0, _request2.default)(currentNamespace + '/api/user/' + users.current_user + '/inviterefuse/' + users.user_initiator, { json: true }, function (err, httpResponse, body) {
+			if (err) {
+				console.log(err);
+				return err;
+			}
+			console.log(httpResponse);
+			io.emit('success_friend_interraction');
+		});
+	});
+
 	socket.on('add_channel_notification', function (id) {
-		console.log(id);
 		socket.emit('add_channel_notification', id);
 	});
 

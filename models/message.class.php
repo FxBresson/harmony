@@ -14,12 +14,7 @@ class Message extends Aida {
     protected $channel;
     protected $author;
 
-    public function __construct() {
-
-    }
-
     public function hydrate() {
-
         parent::hydrate();
 
         $this->channel = new Channel();

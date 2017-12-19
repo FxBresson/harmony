@@ -25,12 +25,32 @@
 }
 
 
-.icon-close:before {
+.icon-accept:before {
 	content: "\EA01";
 }
 
-.icon-plus:before {
+.icon-close:before {
 	content: "\EA02";
+}
+
+.icon-friend:before {
+	content: "\EA03";
+}
+
+.icon-message:before {
+	content: "\EA04";
+}
+
+.icon-plus:before {
+	content: "\EA05";
+}
+
+.icon-profile:before {
+	content: "\EA06";
+}
+
+.icon-refuse:before {
+	content: "\EA07";
 }
 
 
@@ -38,16 +58,46 @@
 @mixin dior-icon($icon) {
 
 	
-	 @if  ($icon == "close") {
+	 @if  ($icon == "accept") {
 		-webkit-font-smoothing: antialiased;
 		font-family: "main-iconfont";
 		content: "\EA01";
 	}
 	
-	@else if ($icon == "plus") {
+	@else if ($icon == "close") {
 		-webkit-font-smoothing: antialiased;
 		font-family: "main-iconfont";
 		content: "\EA02";
+	}
+	
+	@else if ($icon == "friend") {
+		-webkit-font-smoothing: antialiased;
+		font-family: "main-iconfont";
+		content: "\EA03";
+	}
+	
+	@else if ($icon == "message") {
+		-webkit-font-smoothing: antialiased;
+		font-family: "main-iconfont";
+		content: "\EA04";
+	}
+	
+	@else if ($icon == "plus") {
+		-webkit-font-smoothing: antialiased;
+		font-family: "main-iconfont";
+		content: "\EA05";
+	}
+	
+	@else if ($icon == "profile") {
+		-webkit-font-smoothing: antialiased;
+		font-family: "main-iconfont";
+		content: "\EA06";
+	}
+	
+	@else if ($icon == "refuse") {
+		-webkit-font-smoothing: antialiased;
+		font-family: "main-iconfont";
+		content: "\EA07";
 	}
 	
 }
