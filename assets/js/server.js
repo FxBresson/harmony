@@ -50,39 +50,61 @@ io.on('connection', function (socket) {
 				return err;
 			}
 			var error = "";
+			var _iteratorNormalCompletion = true;
+			var _didIteratorError = false;
+			var _iteratorError = undefined;
 
-			var _loop = function _loop(bddUser) {
-				if (user.name === bddUser.username || user.name === bddUser.email) {
-					error = "";
-					cryptPassword(user.password, function (cryptErr, hash) {
-						if (cryptErr) {
-							console.log('error crypting password', cryptErr);
-							return cryptErr;
-						}
-						comparePassword(user.password, bddUser.password, function (errPass, passCorrect) {
-							if (errPass) {
-								console.log('error decrypting password', errPass);
-								return errPass;
+			try {
+				var _loop = function _loop() {
+					var bddUser = _step.value;
+
+					console.log(user.username, bddUser.username, bddUser.email);
+					if (user.username == bddUser.username || user.username == bddUser.email) {
+						error = "";
+						cryptPassword(user.password, function (cryptErr, hash) {
+							if (cryptErr) {
+								console.log('error crypting password', cryptErr);
+								return cryptErr;
 							}
-							if (passCorrect) {
-								// User exist and password match
-								//res.cookie('currentUser', JSON.stringify(user), { maxAge: 900000, httpOnly: true })
-								res.redirect(currentNamespace + '/?action=chat');
-							} else {
-								// User existe but password doest match
-								error = "Password wrong.";
-							}
+							comparePassword(user.password, bddUser.password, function (errPass, passCorrect) {
+								if (errPass) {
+									console.log('error decrypting password', errPass);
+									return errPass;
+								}
+								console.log(passCorrect);
+								if (passCorrect) {
+									// User exist and password match
+									io.emit('success_connect', { url: currentNamespace + '/?action=chat', userId: bddUser.id });
+								} else {
+									// User existe but password doest match
+									error = "Password wrong.";
+								}
+							});
 						});
-					});
-				} else {
-					error = "username or email doesn't exist.";
-				}
-			};
+					} else {
+						error = "username or email doesn't exist.";
+					}
+				};
 
-			for (var bddUser in res.body) {
-				_loop(bddUser);
+				for (var _iterator = res.body[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+					_loop();
+				}
+			} catch (err) {
+				_didIteratorError = true;
+				_iteratorError = err;
+			} finally {
+				try {
+					if (!_iteratorNormalCompletion && _iterator.return) {
+						_iterator.return();
+					}
+				} finally {
+					if (_didIteratorError) {
+						throw _iteratorError;
+					}
+				}
 			}
 
+			console.log('error');
 			if (error != '') {
 				io.emit('error_connect', error);
 			}
@@ -96,11 +118,33 @@ io.on('connection', function (socket) {
 				return err;
 			}
 			var error = "";
-			for (var bddUser in res.body) {
-				if (user.name === bddUser.username || user.email === bddUser.email) {
-					error = "User or Email already exist.";
+			var _iteratorNormalCompletion2 = true;
+			var _didIteratorError2 = false;
+			var _iteratorError2 = undefined;
+
+			try {
+				for (var _iterator2 = res.body[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+					var _bddUser = _step2.value;
+
+					if (user.username === _bddUser.username || user.email === _bddUser.email) {
+						error = "User or Email already exist.";
+					}
+				}
+			} catch (err) {
+				_didIteratorError2 = true;
+				_iteratorError2 = err;
+			} finally {
+				try {
+					if (!_iteratorNormalCompletion2 && _iterator2.return) {
+						_iterator2.return();
+					}
+				} finally {
+					if (_didIteratorError2) {
+						throw _iteratorError2;
+					}
 				}
 			}
+
 			if (error == '') {
 				cryptPassword(user.password, function (cryptErr, hash) {
 					if (cryptErr) {
@@ -113,10 +157,8 @@ io.on('connection', function (socket) {
 							console.log(err);
 							return err;
 						}
-						//res.cookie('currentUser', JSON.stringify(user), { maxAge: 900000, httpOnly: true })
-						//res.redirect(currentNamespace+'/?action=chat')
-						httpResponse.redirect(currentNamespace + '/?action=chat');
-						console.log(httpResponse.request.uri.href);
+
+						io.emit('success_connect', { url: currentNamespace + '/?action=chat', userId: 1 });
 					});
 				});
 			} else {

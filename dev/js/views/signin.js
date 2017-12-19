@@ -1,3 +1,5 @@
+import Cookie from 'js-cookie'
+
 let signin = (socket) => {
 
 	let vueSignin = new Vue({
@@ -20,7 +22,7 @@ let signin = (socket) => {
         	login: function() {
         		this.loading = true
         		let user = {
-        			name : this.name,
+        			username : this.name,
         			password : this.password
         		}
         		socket.emit('connect_user', user)
@@ -34,7 +36,7 @@ let signin = (socket) => {
         			this.loading = false
         		} else {
         			let user = {
-        				name : this.name,
+        				username : this.name,
         				email: this.email,
         				password : this.password
         			}
@@ -42,6 +44,19 @@ let signin = (socket) => {
         		}
         	}
         }
+    })
+
+    socket.on('success_connect', (res)=> {
+    	vueSignin.loading = false
+    	if (Cookie.get('current_user') == undefined) {
+    		Cookie.set('current_user', res.userId, { expires: 7, path: '/' })
+    	} else {
+    		Cookie.remove('current_user')
+    		Cookie.set('current_user', res.userId, { expires: 7, path: '/' })
+    	}
+
+    	document.location.href = res.url
+
     })
 
     socket.on('error_connect', (error)=> {

@@ -26,8 +26,9 @@ io.on('connection', (socket)=>{
 				return err
 			}
 			let error = ""
-			for( let bddUser in res.body ) {
-				if(user.name === bddUser.username || user.name === bddUser.email) {
+			for( let bddUser of res.body ) {
+				console.log(user.username , bddUser.username, bddUser.email)
+				if(user.username == bddUser.username || user.username == bddUser.email) {
 					error = ""
 					cryptPassword(user.password, (cryptErr, hash) => {
 						if(cryptErr) {
@@ -39,10 +40,10 @@ io.on('connection', (socket)=>{
 								console.log('error decrypting password', errPass)
 								return errPass
 							}
+							console.log(passCorrect)
 							if (passCorrect) {
 								// User exist and password match
-								//res.cookie('currentUser', JSON.stringify(user), { maxAge: 900000, httpOnly: true })
-								res.redirect(currentNamespace+'/?action=chat')
+								io.emit('success_connect', {url:currentNamespace+'/?action=chat', userId:bddUser.id })
 							} else {
 								// User existe but password doest match
 								error = "Password wrong."
@@ -53,7 +54,7 @@ io.on('connection', (socket)=>{
 					error = "username or email doesn't exist."
 				}
 			}
-
+			console.log('error')
 			if(error != '') {
 				io.emit('error_connect', error)
 			}
@@ -67,8 +68,8 @@ io.on('connection', (socket)=>{
 				return err
 			}
 			let error = ""
-			for( let bddUser in res.body ) {
-				if(user.name === bddUser.username || user.email === bddUser.email) {
+			for( let bddUser of res.body ) {
+				if(user.username === bddUser.username || user.email === bddUser.email) {
 					error = "User or Email already exist."
 				}
 			}
@@ -84,10 +85,8 @@ io.on('connection', (socket)=>{
 							console.log(err)
 							return err
 						}
-						//res.cookie('currentUser', JSON.stringify(user), { maxAge: 900000, httpOnly: true })
-						//res.redirect(currentNamespace+'/?action=chat')
-						httpResponse.redirect(currentNamespace+'/?action=chat')
-						console.log(httpResponse.request.uri.href)
+
+						io.emit('success_connect', {url:currentNamespace+'/?action=chat', userId:1 })
 					})
 				})
 			} else {
