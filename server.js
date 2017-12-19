@@ -178,6 +178,39 @@ io.on('connection', (socket)=>{
 			socket.emit('select_chan', res.body)
 		})
 	})
+  
+  socket.on('send_invite', (users) => {
+    request(currentNamespace+'/api/user/'+users.current_user+'/invitesend/'+users.user_to_invite, {json : true}, (err,httpResponse,body) => {
+			if (err) {
+				console.log(err)
+				return err
+			}
+			console.log(httpResponse)
+			io.emit('success_friend_interraction')
+		})
+  })
+  
+  socket.on('accept_invite', (users) => {
+    request(currentNamespace+'/api/user/'+users.current_user+'/inviteaccept/'+users.user_initiator, {json : true}, (err,httpResponse,body) => {
+			if (err) {
+				console.log(err)
+				return err
+			}
+			console.log(httpResponse)
+			io.emit('success_friend_interraction')
+		})
+  })
+   
+  socket.on('refuse_invite', (users) => {
+    request(currentNamespace+'/api/user/'+users.current_user+'/inviterefuse/'+users.user_initiator, {json : true}, (err,httpResponse,body) => {
+			if (err) {
+				console.log(err)
+				return err
+			}
+			console.log(httpResponse)
+			io.emit('success_friend_interraction')
+		})
+  })
 
 	socket.on('disconnect', ()=>{
 		console.log('a user is disconnected')

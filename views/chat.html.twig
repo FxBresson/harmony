@@ -107,6 +107,12 @@
                         <img v-if="!user.avatar" src="assets/images/avatar_default.jpg" alt="user" class="img-mini radius" />
                         <span>${ user.username }</span>
                         <span v-if="user.battletag">#${ user.battletag }</span>
+                        <div class="btn-action">
+                            <span v-if="" @click.prevent="sendMessage(channel.id_channel)">MESSAGE</span>
+                            <span v-if="!user.friend && !user.invite" @click.prevent="sendInvite(user.id_user)">FRIEND</span>
+                            <span v-if="user.invite == 'received'" @click.prevent="acceptInvite(user.id_user)">ACCEPT</span>
+                            <span v-if="user.invite == 'received'" @click.prevent="refuseInvite(user.id_user)">REFUSE</span>
+                        </div>
                     </li>
                 </ul>
             </template>
