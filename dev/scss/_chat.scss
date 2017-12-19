@@ -8,12 +8,7 @@ body.chat {
 
 
 // Section
-#section-left , #section-center , #section-users {
-    -webkit-font-smoothing: antialiased;
-    text-shadow: 1px 1px 1px rgba(0,0,0,0.01);
-}
-
-#section-left , #section-users {
+#section-left , #section-right {
     background-color: #87677B;
 
     ul li {
@@ -76,10 +71,19 @@ body.chat {
 // Chat
 #section-chat {
 
+    ul {
+        margin-left: 5%;
+    }
+
     li {
         color: #000;
         background-color: rgba(0,0,0,0.1);
-        margin-right: 15%;
+        margin-right: 5%;
+        padding: 1%;
+
+        p {
+            margin-bottom: 0;
+        }
     }
 
     #chat-avatar img {
@@ -91,6 +95,7 @@ body.chat {
 
     #chat-user {
         font-size: 16px;
+        font-weight: bold;
     }
     #chat-time {
         font-size: 12px;
@@ -102,10 +107,50 @@ body.chat {
 
 
 
+#section-input {
+
+    .form-group {
+        position: relative;
+        top: 20%;
+        left: 2%;
+        font-size: 0;
+    }
+
+    .form-input {
+        width: 90%;
+        display: inline-block;
+        vertical-align: middle;
+        border-color: #87677B;
+    }
+
+    button {
+        height: 36px;
+        border-color: #87677B;
+        color: #87677B;
+        font-weight: bold;
+    }
+}
+
+ 
+
 
 // Profile
-#section-profile img, #section-profile p {
-    display: inline-block;
+#section-profile { 
+    padding-top: 4%;
+
+    img,  p {
+        display: inline-block;
+    }
+
+    p {
+        color: #fff;
+        font-weight: bold;
+        font-size: 1em;
+    }
+
+    button {
+        float: right;
+    }
 }
 
 
