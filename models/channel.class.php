@@ -32,7 +32,7 @@ class Channel extends Aida {
     }
 
     public function messages() {
-        $query = "SELECT * FROM ".Message::$table_name." WHERE ".Channel::$pk."=".$this->{Channel::$pk}.";";
+        $query = "SELECT * FROM ".Message::$table_name." LEFT JOIN users USING(id_user) WHERE ".Channel::$pk."=".$this->{Channel::$pk}.";";
         return myFetchAllAssoc($query);
     }
 
