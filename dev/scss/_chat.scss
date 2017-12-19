@@ -48,6 +48,19 @@ body.chat .loaderChan {
         &:hover {
             color: #fff;
         }
+
+        span.notification {
+            background-color: red;
+            border-radius: 50%;
+            font-size: 8px;
+            line-height: 15px;
+            text-align: center;
+            height: 15px;
+            min-width: 15px;
+            vertical-align: middle;
+            position: absolute;
+            bottom: 10px;
+        }
     }
 
     .channel-active {
