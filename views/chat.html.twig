@@ -70,8 +70,7 @@
                 <ul class="type-none">
                     <li v-for="message in messages">
                         <p id="chat-avatar">
-                            <img v-if="message.avatar" :src="message.avatar" alt="profile" class="img-mini radius" />
-                            <img v-if="!message.avatar" src="assets/images/avatar_default.jpg" alt="profile" class="img-mini radius" />
+                            <img :src="message.avatar?message.avatar:'assets/images/avatar_default.jpg'" alt="profile" class="img-mini radius" />
                         </p>
                         <p><span id="chat-user">${ message.username }</span> <span id="chat-time">${ message.timestamp }</span></p>
                         <p id="chat-message">${ message.content }</p>
