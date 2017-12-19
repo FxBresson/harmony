@@ -24,10 +24,11 @@ class User extends Aida {
                 $this->$attr_name = password_hash($attr_value, PASSWORD_DEFAULT);
             } else if ($attr_name === 'avatar') {
                 if(isset($_FILES['avatar'])) { 
-                    $dossier = '/public/avatar/';
-                    var_dump($this->username);
+                    $dossier = realpath('../public/avatar/');
                     $fichier = basename($_FILES['avatar']['name']);
-                    $pathname = $dossier.$fichier;
+                    $ext = pathinfo($fichier, PATHINFO_EXTENSION);
+                    
+                    $pathname = $dossier.'/'.$this->username.'#'.$this->battletag.'.'.$ext;
                     if(move_uploaded_file($_FILES['avatar']['tmp_name'], $pathname)) {
                         $this->$attr_name = $pathname;
                     } else {
