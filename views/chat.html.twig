@@ -108,8 +108,10 @@
                 <template v-if="users.length > 0 && !error">
                     <ul class="type-none">
                         <li v-for="user in users">
-                            <img :src="user.avatar" alt="user" class="img-mini radius" />
+                            <img v-if="user.avatar" :src="user.avatar" alt="user" class="img-mini radius" />
+                            <img v-if="!user.avatar" src="assets/images/avatar_default.jpg" alt="user" class="img-mini radius" />
                             <span>${ user.username }</span>
+                            <span v-if="user.battletag">#${ user.battletag }</span>
                         </li>
                     </ul>
                 </template>
