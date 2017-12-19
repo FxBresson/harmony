@@ -5,175 +5,178 @@
 {% block bodyClass %}chat{% endblock %}
 
 {% block content %}
-    <input id="selectedChannel" type="hidden">
-    <section id="section-left" class="section column-20 row-100">
+<input id="selectedChannel" type="hidden">
+<section id="section-left" class="section column-20 row-100">
 
-        <!-- General channels list -->
-        <div id="section-general" class="row-50 border-bottom">
-            <h3>Channels</h3>
+    <!-- General channels list -->
+    <div id="section-general" class="row-50 border-bottom">
+        <h3>Channels</h3>
 
-            <div id="listChannels">
-                <template v-if="channels.length > 0 && !error">
-                    <ul class="type-none">
-                        <li  v-bind:class="{ 'channel-active': channel.id_channel === selected }" v-for="channel in channels" @click.prevent="selectChan(channel.id_channel)" v-if="channel.id_type == 1">
-                            ${ channel.name }
-                        </li>
-                    </ul>
-                </template>
+        <div id="listChannels">
+            <template v-if="channels.length > 0 && !error">
+                <ul class="type-none">
+                    <li  v-bind:class="{ 'channel-active': channel.id_channel === selected }" v-for="channel in channels" @click.prevent="selectChan(channel.id_channel)" v-if="channel.id_type == 1">
+                        ${ channel.name }
+                    </li>
+                </ul>
+            </template>
 
-                <span class="loading" v-else-if="!error">Loading...</span>
-                <span class="error" v-else="error">${ error }</span>
+            <span class="loading" v-else-if="!error">Loading...</span>
+            <span class="error" v-else="error">${ error }</span>
+        </div>
+    </div>
+
+    <!-- Private channels list -->
+    <div id="section-private" class="row-50 border-top">
+        <h3>Private</h3>
+
+        <div id="listPrivates">
+            <template v-if="privates.length > 0 && !error">
+                <ul class="type-none">
+                    <li  {% if type == 'private' and id == 2 %}class="channel-active"{% endif %} v-for="private in privates" v-if="private.id_type == 2">
+                        <a href="#">${ private.name }</a>
+                    </li>
+                </ul>
+            </template>
+
+            <span class="loading" v-else-if="!error">Loading...</span>
+            <span class="error" v-else="error">${error}</span>
+
+            <!-- Add private channel -->
+            <div id="add-private" @click="showModal = true">
+                <img src="assets/images/plus.svg" alt="plus">
+                <modal v-if="showModal" :show="showModal" :title="title" :description="description" @close="closeModal()" @create="createNewChan()"></modal>
             </div>
         </div>
 
-        <!-- Private channels list -->
-        <div id="section-private" class="row-50 border-top">
-            <h3>Private</h3>
 
-            <div id="listPrivates">
-                <template v-if="privates.length > 0 && !error">
-                    <ul class="type-none">
-                        <li  {% if type == 'private' and id == 2 %}class="channel-active"{% endif %} v-for="private in privates" v-if="private.id_type == 2">
-                            <a href="#">${ private.name }</a>
-                        </li>
-                    </ul>
-                </template>
+    </div>
 
-                <span class="loading" v-else-if="!error">Loading...</span>
-                <span class="error" v-else="error">${error}</span>
+</section>
 
-                <!-- Add private channel -->
-                <div id="add-private" @click="showModal = true">
-                    <img src="assets/images/plus.svg" alt="plus">
-                    <modal v-if="showModal" :show="showModal" :title="title" :description="description" @close="closeModal()" @create="createNewChan()"></modal>
-                </div>
-            </div>
+<section id="section-center" class="section column-60 row-100">
+    <!-- LOADER -->
+    <div id="mainLoader"></div>
+    <!-- Channel title / Channel users -->
+    <div id="section-top" class="row-10 border-bottom">
+        <h2>Titre de la channel</h2>
+    </div>
 
+    <!-- Chat -->
+    <div id="section-chat" class="row-80 border-top border-bottom">
+        <div id="listMessages">
+            <template v-if="messages.length > 0 && !error">
+                <ul class="type-none">
+                    <li v-for="message in messages">
+                        <p id="chat-avatar">
+                            <img v-if="message.avatar" :src="message.avatar" alt="profile" class="img-mini radius" />
+                            <img v-if="!message.avatar" src="assets/images/avatar_default.jpg" alt="profile" class="img-mini radius" />
+                        </p>
+                        <p><span id="chat-user">${ message.username }</span> <span id="chat-time">${ message.timestamp }</span></p>
+                        <p id="chat-message">${ message.content }</p>
+                    </li>
+                </ul>
+            </template>
 
+            <span class="loading" v-else-if="!error">Loading...</span>
+            <span class="error" v-else="error">${error}</span>
+        </div>
+    </div>
+
+    <!-- Text input message -->
+    <div id="section-input" class="row-10 border-top">
+        <form class="horizontal" >
+            <input type="text" name="send-message" id="send-message" class="column-50" placeholder="Enter your message" v-on:keyup.enter="send()" v-model="message">
+            <button class="send" @click.prevent="send()" >Send</button>
+        </form>
+    </div>
+</section>
+
+<!-- Users list -->
+<section id="section-users" class="section column-19 row-100">
+
+    <!-- User profil -->
+    <div id="section-profile" class="row-10 border-bottom">
+        <img src="assets/images/user-img.png" alt="user" class="img-mini radius">
+        <p>My profile</p>
+        <a href="?action=profile"><img src="assets/images/profile.svg" alt="profile" class="img-mini"></a>
+    </div>
+
+    <!-- Users -->
+    <div id="section-users" class="row-90 border-top">
+
+        <!-- Friends -->
+        <h3>Users</h3>
+        <div id="listUsers">
+            <template v-if="users.length > 0 && !error">
+                <ul class="type-none">
+                    <li v-for="user in users">
+                        <img v-if="user.avatar" :src="user.avatar" alt="user" class="img-mini radius" />
+                        <img v-if="!user.avatar" src="assets/images/avatar_default.jpg" alt="user" class="img-mini radius" />
+                        <span>${ user.username }</span>
+                        <span v-if="user.battletag">#${ user.battletag }</span>
+                    </li>
+                </ul>
+            </template>
+
+            <span class="loading" v-else-if="!error">Loading...</span>
+            <span class="error" v-else="error">${error}</span>
         </div>
 
-    </section>
-
-    <section id="section-center" class="section column-60 row-100">
-        <!-- LOADER -->
-        <div id="mainLoader"></div>
-        <!-- Channel title / Channel users -->
-        <div id="section-top" class="row-10 border-bottom">
-            <h2>Titre de la channel</h2>
+        <!-- All other users -->
+        <h3>Others</h3>
+        <div id="listUsersOthers">
+            <template v-if="users.length > 0 && !error">
+                <ul class="type-none">
+                    <li> <img :src="user.avatar" alt="user" class="img-mini radius"> ${ user.namename } <a href="?action=chat&link=addFriend"> <img src="assets/images/plus.svg" alt="plus" class="picto-mini"></a></li>
+                </ul>
+            </template>
+            <span class="loading" v-else-if="!error">Loading...</span>
+            <span class="error" v-else="error">${error}</span>
         </div>
+    </div>
 
-        <!-- Chat -->
-        <div id="section-chat" class="row-80 border-top border-bottom">
-            <div id="listMessages">
-                <template v-if="messages.length > 0 && !error">
-                    <ul class="type-none">
-                        <li v-for="message in messages">
-                            <p id="chat-avatar"><img src="assets/images/user-img.png" alt="profile" class="img-mini radius"></p>
-                            <p><span id="chat-user">${ message.id_user }</span> <span id="chat-time">${ message.timestamp }</span></p>
-                            <p id="chat-message">${ message.content }</p>
-                        </li>
-                    </ul>
-                </template>
-
-                <span class="loading" v-else-if="!error">Loading...</span>
-                <span class="error" v-else="error">${error}</span>
-            </div>
-        </div>
-
-        <!-- Text input message -->
-        <div id="section-input" class="row-10 border-top">
-            <form class="horizontal" >
-                <input type="text" name="send-message" id="send-message" class="column-50" placeholder="Enter your message" v-on:keyup.enter="send()" v-model="message">
-                <button class="send" @click.prevent="send()" >Send</button>
-            </form>
-        </div>
-    </section>
-
-    <!-- Users list -->
-    <section id="section-users" class="section column-19 row-100">
-
-        <!-- User profil -->
-        <div id="section-profile" class="row-10 border-bottom">
-            <img src="assets/images/user-img.png" alt="user" class="img-mini radius">
-            <p>My profile</p>
-            <a href="?action=profile"><img src="assets/images/profile.svg" alt="profile" class="img-mini"></a>
-        </div>
-
-        <!-- Users -->
-        <div id="section-users" class="row-90 border-top">
-
-            <!-- Friends -->
-            <h3>Users</h3>
-            <div id="listUsers">
-                <template v-if="users.length > 0 && !error">
-                    <ul class="type-none">
-                        <li v-for="user in users">
-                            <img v-if="user.avatar" :src="user.avatar" alt="user" class="img-mini radius" />
-                            <img v-if="!user.avatar" src="assets/images/avatar_default.jpg" alt="user" class="img-mini radius" />
-                            <span>${ user.username }</span>
-                            <span v-if="user.battletag">#${ user.battletag }</span>
-                        </li>
-                    </ul>
-                </template>
-
-                <span class="loading" v-else-if="!error">Loading...</span>
-                <span class="error" v-else="error">${error}</span>
-            </div>
-
-            <!-- All other users -->
-            <h3>Others</h3>
-            <div id="listUsersOthers">
-                <template v-if="users.length > 0 && !error">
-                    <ul class="type-none">
-                        <li> <img :src="user.avatar" alt="user" class="img-mini radius"> ${ user.namename } <a href="?action=chat&link=addFriend"> <img src="assets/images/plus.svg" alt="plus" class="picto-mini"></a></li>
-                    </ul>
-                </template>
-                <span class="loading" v-else-if="!error">Loading...</span>
-                <span class="error" v-else="error">${error}</span>
-            </div>
-        </div>
-
-        </div>
-    </section>
-    <template id="modal-create">
-      <transition name="modal">
+    </div>
+</section>
+<template id="modal-create">
+    <transition name="modal">
         <div class="modal-mask">
-          <div class="modal-wrapper">
-            <div class="modal-container">
-              <div class="modal-header">
-                <slot name="header">
-                  <h2 class="h5">Create a new private Channel</h2>
-                </slot>
-                <button class="modal-close-button icon icon-close" @click="internalShow=false">
-                    close
-                </button>
-              </div>
-
-              <div class="modal-body">
-                <slot name="body">
-                    <div class="form-group">
-                        <label class="form-label" for="nameChan">Name</label>
-                        <input class="form-input" type="text" id="nameChan" placeholder="Name" v-model="internalTitle">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="description">Description</label>
-                        <textarea class="form-input" id="description" v-model="internalDesc" placeholder="Description" rows="3"></textarea>
+            <div class="modal-wrapper">
+                <div class="modal-container">
+                    <div class="modal-header">
+                        <slot name="header">
+                            <h2 class="h5">Create a new private Channel</h2>
+                        </slot>
+                        <button class="modal-close-button icon icon-close" @click="internalShow=false">
+                            close
+                        </button>
                     </div>
 
-                </slot>
-              </div>
+                    <div class="modal-body">
+                        <slot name="body">
+                            <div class="form-group">
+                                <label class="form-label" for="nameChan">Name</label>
+                                <input class="form-input" type="text" id="nameChan" placeholder="Name" v-model="internalTitle">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="description">Description</label>
+                                <textarea class="form-input" id="description" v-model="internalDesc" placeholder="Description" rows="3"></textarea>
+                            </div>
 
-              <div class="modal-footer">
-                <slot name="footer" >
-                  <button class="btn btn-primary" :disabled="internalTitle==''" @click="$emit('create')">create</button>
-                  <button class="btn btn-default" @click="internalShow=false">Cancel</button>
-                </slot>
-              </div>
+                        </slot>
+                    </div>
+
+                    <div class="modal-footer">
+                        <slot name="footer" >
+                            <button class="btn btn-primary" :disabled="internalTitle==''" @click="$emit('create')">create</button>
+                            <button class="btn btn-default" @click="internalShow=false">Cancel</button>
+                        </slot>
+                    </div>
+                </div>
+                <div class="closeModal" @click="internalShow=false"></div>
             </div>
-            <div class="closeModal" @click="internalShow=false"></div>
-          </div>
         </div>
-      </transition>
-    </template>
+    </transition>
+</template>
 
 {% endblock %}
