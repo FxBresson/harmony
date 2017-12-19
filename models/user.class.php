@@ -26,9 +26,9 @@ class User extends Aida {
                     $fichier = basename($_FILES['avatar']['name']);
                     $ext = pathinfo($fichier, PATHINFO_EXTENSION);
 
-                    $pathname = $dossier.'/'.$this->username.'#'.$this->battletag.'.'.$ext;
+                    $pathname = $dossier.'/'.$this->username.'-'.$this->battletag.'.'.$ext;
                     if(move_uploaded_file($_FILES['avatar']['tmp_name'], $pathname)) {
-                        $this->$attr_name = $pathname;
+                        $this->$attr_name = 'public/avatar/'.$this->username.'-'.$this->battletag.'.'.$ext;;
                     } else {
                         echo 'Echec de l\'upload !';
                     }
