@@ -73,6 +73,7 @@ io.on('connection', (socket)=>{
 						return cryptErr
 					}
 					user.password = hash
+					console.log(user)
 					request.post({url:currentNamespace+'/api/user', form:user }, (err,httpResponse,body) => {
 						if(err) {
 							console.log(err)

@@ -43,8 +43,8 @@
                 <span class="error" v-else="error">${error}</span>
 
                 <!-- Add private channel -->
-                <div id="add-private" @click="showModal = true">
-                    <img src="assets/images/plus.svg" alt="plus">
+                <div id="add-private" >
+                    <button class="add icon icon-plus" @click="showModal = true">plus</button>
                     <modal v-if="showModal" :show="showModal" :title="title" :description="description" @close="closeModal()" @create="createNewChan()"></modal>
                 </div>
             </div>

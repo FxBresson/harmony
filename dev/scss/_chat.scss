@@ -1,3 +1,4 @@
+@import 'framework/vars.scss';
 // Common
 body.chat {
     margin: 0;
@@ -18,11 +19,23 @@ body.chat {
     position: absolute;
     bottom: 10px;
     left: 10px;
+
+    .add {
+        font-size: 0;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        outline: none;
+
+        &::before {
+            font-size: 35px;
+            color: $primary-color;
+        }
+    }
+
 }
 
-#section-private #add-private img {
-    width: 22%;
-} 
+#section-private #add-private
 
 
 // Chat

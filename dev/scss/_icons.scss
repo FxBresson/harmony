@@ -29,6 +29,10 @@
 	content: "\EA01";
 }
 
+.icon-plus:before {
+	content: "\EA02";
+}
+
 
 
 @mixin dior-icon($icon) {
@@ -38,6 +42,12 @@
 		-webkit-font-smoothing: antialiased;
 		font-family: "main-iconfont";
 		content: "\EA01";
+	}
+	
+	@else if ($icon == "plus") {
+		-webkit-font-smoothing: antialiased;
+		font-family: "main-iconfont";
+		content: "\EA02";
 	}
 	
 }
