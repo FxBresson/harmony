@@ -1,0 +1,84 @@
+.profile {
+    
+        -webkit-font-smoothing: antialiased;
+        text-shadow: 1px 1px 1px rgba(0,0,0,0.01);
+        // height: 100vh;
+        max-width: 100vw;
+        min-width: 100vw;
+        padding: 0px;
+        line-height: 20px;
+        background: -webkit-linear-gradient(90deg, #614385 10%, #516395 90%); /* Chrome 10+, Saf5.1+ */
+        background:    -moz-linear-gradient(90deg, #614385 10%, #516395 90%); /* FF3.6+ */
+        background:     -ms-linear-gradient(90deg, #614385 10%, #516395 90%); /* IE10 */
+        background:      -o-linear-gradient(90deg, #614385 10%, #516395 90%); /* Opera 11.10+ */
+        background:         linear-gradient(90deg, #614385 10%, #516395 90%); /* W3C */
+    
+        // #section-form {
+        //     height:100vh;
+        //     width:100vw;
+        // }
+    
+        // .about {
+        //     color:#fff;
+        //     text-align:center;
+        //     margin-top:20px;
+        // }
+    
+        .simplebox, .simplebutton {
+            outline: none;
+            border: 1px solid #ddd !important;
+            -webkit-box-shadow: none !important;
+            -moz-box-shadow: none !important;
+            box-shadow: none !important;
+            font-size:12px;
+        }
+    
+        // .container {
+        #section-form {
+            position: absolute;;
+            top: 60%;
+            left: 50%;
+            -webkit-transform: translateY(-50%) translateX(-50%);
+            -ms-transform: translateY(-50%) translateX(-50%);
+            transform: translateY(-50%) translateX(-50%);
+            margin: auto;
+        }
+    
+        .formHolder {
+            // width:300px;
+            margin:0 auto;
+            background:rgba(255,255,255,1);
+            -webkit-border-radius: 6px;
+            border-radius: 6px;
+            overflow:hidden;
+            padding:30px;
+            box-shadow: 0 4px 2px -2px rgba(0,0,0,0.2);
+        }
+    
+        .formHolder h3 {
+            margin:0 0 14px 0;
+            font-size:19px;
+            font-weight:600;
+        }
+
+        .form-group {
+            display: inline;
+
+            &.button {
+                display: block;
+            }
+        }
+
+        .form-input {
+            display: inline-block;
+            width: 45%;
+            margin-bottom: 2%;
+        }
+    
+        .saveButton {
+            margin-right: 45px;
+        }
+    }
+    
+    
+    

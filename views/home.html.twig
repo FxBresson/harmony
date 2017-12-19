@@ -27,7 +27,7 @@
             <div class="form-group">
 
                 <input type="password" class="form-input" id="confirmPassword" placeholder="Confirm password" v-model="confirmPassword">
-                <span class="form-input-hint" v-if='errorConfirmPassword'>Le second mot de passe ne correspond pas au premier.</span>
+                <span class="form-input-hint" v-if='errorConfirmPassword'>Passwords do not match!</span>
             </div>
 
             <button type="submit" id="signupButton" class="btn btn-sm btn-default simplebutton newAccButton" :class="{'loading':loading}" :disabled=" name == '' || password == '' || confirmPassword == '' " @click.prevent="newAccount()" >Sign Up</button>
