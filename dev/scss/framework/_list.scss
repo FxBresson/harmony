@@ -9,3 +9,44 @@ ul li {
 ul.type-none li {
     list-style-type: none;
 }
+
+// // Lists
+// ul,
+// ol {
+//   margin: $unit-4 0 $unit-4 $unit-4;
+//   padding: 0;
+
+//   ul,
+//   ol {
+//     margin: $unit-4 0 $unit-4 $unit-4;
+//   }
+
+//   li {
+//     margin-top: $unit-2;
+//   }
+// }
+
+// ul {
+//   list-style: disc inside;
+
+//   ul {
+//     list-style-type: circle;
+//   }
+// }
+
+// ol {
+//   list-style: decimal inside;
+
+//   ol {
+//     list-style-type: lower-alpha;
+//   }
+// }
+
+// dl {
+//   dt {
+//     font-weight: bold;
+//   }
+//   dd {
+//     margin: $unit-2 0 $unit-4 0;
+//   }
+// }
