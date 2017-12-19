@@ -44,6 +44,7 @@ body.chat .loaderChan {
     ul li {
         color: #000;
         cursor: pointer;
+        position: relative;
 
         &:hover {
             color: #fff;
