@@ -54,8 +54,8 @@ class Aida {
         if (!isset($this->{get_class($this)::$pk})) {
             //Insert
             $query = "INSERT INTO ".get_class($this)::$table_name." (".implode(", ", get_class($this)::$fields).") VALUES (".implode(", ", $values).");";
-            
-            return myQuery($query);
+            myQuery($query);
+            return getLastId();
 
         } else {
             //update
@@ -64,7 +64,7 @@ class Aida {
                 $arr[] = $field.'='.$values[$index];
             }
             $query = "UPDATE ".get_class($this)::$table_name." SET ".implode(", ", $arr)." WHERE ".get_class($this)::$pk."=".$this->{get_class($this)::$pk}.";";
-            
+
             return myQuery($query);
         }
     }

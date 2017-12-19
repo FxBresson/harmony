@@ -20,14 +20,12 @@ class User extends Aida {
 
     public function __set($attr_name, $attr_value) {
         if (in_array($attr_name, get_class($this)::$fields) || $attr_name === get_class($this)::$pk) {
-            if ($attr_name === 'password') {
-                $this->$attr_name = password_hash($attr_value, PASSWORD_DEFAULT);
-            } else if ($attr_name === 'avatar') {
+            if ($attr_name === 'avatar') {
                 if(isset($_FILES['avatar'])) { 
                     $dossier = realpath('../public/avatar/');
                     $fichier = basename($_FILES['avatar']['name']);
                     $ext = pathinfo($fichier, PATHINFO_EXTENSION);
-                    
+
                     $pathname = $dossier.'/'.$this->username.'#'.$this->battletag.'.'.$ext;
                     if(move_uploaded_file($_FILES['avatar']['tmp_name'], $pathname)) {
                         $this->$attr_name = $pathname;
