@@ -30,9 +30,7 @@
         <div id="listPrivates">
             <template v-if="privates.length > 0 && !error">
                 <ul class="type-none">
-                    <li  {% if type == 'private' and id == 2 %}class="channel-active"{% endif %} v-for="private in privates" v-if="private.id_type == 2">
-                        <a href="#">${ private.name }</a>
-                    </li>
+                    <li v-for="private in privates" v-bind:class="{ 'channel-active': private.id_channel === selected }" @click.prevent="selectChan(private.id_channel)" > ${ private.name }</li>
                 </ul>
             </template>
 
