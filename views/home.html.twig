@@ -34,6 +34,10 @@
                 <span class="form-input-hint" v-if='errorConfirmPassword'>Passwords do not match!</span>
             </div>
 
+            <div class="form-group">
+                <input type="file" name="avatar" id="avatar">
+            </div>
+
             <button type="submit" id="signupButton" class="btn btn-sm btn-default simplebutton newAccButton" :class="{'loading':loading}" :disabled=" name == '' || password == '' || confirmPassword == '' " @click.prevent="newAccount()" >Sign Up</button>
             <button class="btn btn-sm btn-link loginButton" id="showLogin" @click="toggle('login')" >Already have an account?</button>
 
